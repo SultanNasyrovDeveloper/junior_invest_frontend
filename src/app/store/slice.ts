@@ -16,3 +16,4 @@ const appSlice = createSlice({
 export const { actions } = appSlice;
 
 export default appSlice.reducer;
+
