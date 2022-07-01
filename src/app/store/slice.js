@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface IAppState {
-}
-
-const initialState: IAppState = {
+const initialState = {
 };
 
 const appSlice = createSlice({

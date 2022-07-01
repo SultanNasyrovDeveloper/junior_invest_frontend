@@ -1,21 +1,19 @@
-import React, { FC, ReactNode, createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { useAsync } from 'react-use';
 
 import { fetchMe } from '../api';
 import authService from '../services/auth';
 
-export interface IAuthProviderProps {
-  children: ReactNode
-}
-
 const AuthContext = createContext({});
 
-export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => authService.user);
 
   useAsync(async () => {
-    const user = await fetchMe();
-    setUser(user);
+    if (user) {
+      const user = await fetchMe();
+      setUser(user);
+    }
   }, []);
 
   return (

@@ -1,17 +1,11 @@
 import { Button, Form, Input } from 'antd';
-import React, { FC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
-import { ISigninData } from '../types';
-
-export interface ILoginFormProps {
-  onSubmit: (signinData: ISigninData) => void;
-}
-
-const SignInForm: FC<ILoginFormProps> = (props) => {
+const SigninForm = (props) => {
 
   const { onSubmit } = props;
 
-  const onFinish = useCallback((data: ISigninData) => {
+  const onFinish = useCallback((data) => {
     onSubmit(data);
   }, []);
 
@@ -54,4 +48,4 @@ const SignInForm: FC<ILoginFormProps> = (props) => {
   );
 };
 
-export default SignInForm;
+export default SigninForm;

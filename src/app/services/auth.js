@@ -14,15 +14,15 @@ const AuthService = class {
     return JSON.parse(localStorage.getItem(userKey));
   }
 
-  set accessToken(accessToken: string) {
+  set accessToken(accessToken) {
     localStorage.setItem(accessTokenKey, accessToken);
   }
 
-  set refreshToken(refreshToken: string) {
+  set refreshToken(refreshToken) {
     localStorage.setItem(refreshTokenKey, refreshToken);
   }
 
-  set user(user: object) {
+  set user(user) {
     localStorage.setItem(userKey, JSON.stringify(user));
   }
 
@@ -48,17 +48,7 @@ const AuthService = class {
     this.user = data.user;
   }
 
-  signin(
-    accessToken: string,
-    refreshToken: string,
-    user: object
-  ) {
-    this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
-    this.user = user;
-  }
-
-  signout = () => {
+  removeAuthData = () => {
     localStorage.removeItem(accessTokenKey);
     localStorage.removeItem(refreshTokenKey);
     localStorage.removeItem(userKey);
