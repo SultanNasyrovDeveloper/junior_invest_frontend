@@ -34,9 +34,10 @@ client.interceptors.response.use(
   async function (error) {
 
     const originalConfig = error.config;
+
     const logout = () => {
       AuthService.logout();
-      window.location.replace('/login');
+      window.location.replace('/signin');
     }
 
     if (!AuthService.accessToken) {
@@ -47,18 +48,23 @@ client.interceptors.response.use(
       logout();
     }
 
-    try {
-      originalConfig.retry = true;
-      const response = await client.post(
-        tokenRefreshUrl, { refresh: AuthService.refreshToken }
-      );
-      const newAccessToken = response.data.access;
-      AuthService.accessToken = newAccessToken;
-      originalConfig.Authorization = `JWT ${newAccessToken}`;
-      return client.request(originalConfig);
-    } catch(error) {
-      return logout();
+    if (error.response.status === 401) {
+      try {
+
+        originalConfig.retry = true;
+        const response = await client.post(
+          tokenRefreshUrl, { refresh: AuthService.refreshToken }
+        );
+        const newAccessToken = response.data.access;
+        AuthService.accessToken = newAccessToken;
+        originalConfig.Authorization = `JWT ${newAccessToken}`;
+        return client.request(originalConfig);
+      } catch(error) {
+        return logout();
+      }
     }
+
+    return Promise.reject(error);
 });
 
 export default client;

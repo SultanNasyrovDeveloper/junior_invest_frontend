@@ -20,6 +20,7 @@ const GeneralInfoForm = (props) => {
       name="project"
       ref={formRef}
       layout="vertical"
+      initialValues={ initialValues }
     >
       <Form.Item
         label="Category"

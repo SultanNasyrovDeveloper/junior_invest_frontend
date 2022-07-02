@@ -14,13 +14,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <Provider store={store}>
+      <Provider store={store}>
+        <AuthProvider>
           <Routes>
             <Route path="/*" element={<App />} />
           </Routes>
-        </Provider>
-      </AuthProvider>
+        </AuthProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

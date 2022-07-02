@@ -1,5 +1,4 @@
 import { PageHeader, Row, Col, Card, Button } from 'antd';
-import _ from 'lodash';
 import React, {
   useState,
   useMemo,
@@ -9,7 +8,11 @@ import React, {
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchProjectCategories } from '../api';
+import {
+  fetchProjectCategories,
+  createProject,
+  fetchMyNewProject
+} from '../api';
 import {
   FormSteps,
   GeneralInfoForm,
@@ -26,21 +29,29 @@ const NewProjectPage = () => {
   const projectCategories = useSelector(
     projectSelectors.getProjectCategories
   );
+  const newProject = useSelector(projectSelectors.getNewProject);
+
+  const formProps = useMemo(() => {
+    return {
+      formRef: formRef,
+      initialValues: newProject
+    }
+  }, [formRef, newProject]);
 
   const currentForm = useMemo(() => {
 
     if (currentStep === 0) {
-      return <GeneralInfoForm formRef={formRef}/>;
+      return <GeneralInfoForm {...formProps} />;
     }
     if (currentStep === 1) {
-      return <PresentationForm formRef={formRef}/>;
+      return <PresentationForm {...formProps}/>;
     }
-  }, [currentStep]);
+  }, [currentStep, formProps]);
 
   const handleNextStepClick = useCallback(async () => {
     try {
       const validatedData = await formRef.current.validateFields();
-      console.log(validatedData);
+      dispatch(createProject(validatedData))
 
     } catch (error) {
       console.log('Form is not valid');
@@ -48,11 +59,14 @@ const NewProjectPage = () => {
   }, [formRef]);
 
   useEffect(() => {
-    if (_.isEmpty(projectCategories)) {
+    setIsLoading(true);
+    console.log('Is loading')
+    dispatch(fetchMyNewProject)
+    if (!projectCategories) {
       dispatch(fetchProjectCategories);
     }
-  }, [dispatch, projectCategories]);
-
+    setIsLoading(false);
+  }, []);
 
   return (
     <>
@@ -72,7 +86,7 @@ const NewProjectPage = () => {
                 type="primary"
                 onClick={handleNextStepClick}
               >
-                Следующий шаг
+                Сохранить и продолжить
               </Button>
             }
             { currentStep === 4 &&
@@ -89,9 +103,12 @@ const NewProjectPage = () => {
 
       <Row>
         <Col span={24}>
-          <Card>
-            { currentForm }
-          </Card>
+          {
+            !isLoading &&
+            <Card>
+              { currentForm }
+            </Card>
+          }
         </Col>
       </Row>
     </>

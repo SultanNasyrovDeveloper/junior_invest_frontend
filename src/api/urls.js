@@ -5,3 +5,5 @@ export const tokenRefreshUrl = 'auth/jwt/refresh/';
 export const myUserUrl = 'auth/users/me/';
 
 export const projectCategoriesUrl = 'project/project_categories/';
+
+export const projectsUrl = 'project/projects/';

@@ -1,15 +1,19 @@
-import React, { createContext, useState } from 'react';
-import { useAsync } from 'react-use';
+import React, { createContext, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import AuthService from 'apps/auth/service';
+import { fetchMe } from 'apps/user/api';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
+  const dispatch = useDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState(() => AuthService.isLoggedIn);
 
-  useAsync(async () => {
-    if (isLoggedIn) {}
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchMe);
+    }
   }, []);
 
   return (
