@@ -17,7 +17,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useAuth, useLogout } from '../hooks';
+import { useAuth, useLogout } from 'apps/auth/hooks';
 
 const StyledUserMenuIcon = styled(UserOutlined)`
   cursor: pointer;
@@ -37,13 +37,13 @@ const ListItemStyled = styled(List.Item)`
 
 const UserMenu = () => {
 
-  const { user } = useAuth();
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const logout = useLogout();
 
   return (
     <>
-      { user &&
+      { isLoggedIn &&
         <Dropdown
           trigger={['click']}
           placement="bottomRight"
@@ -93,9 +93,11 @@ const UserMenu = () => {
           <Avatar icon={<StyledUserMenuIcon />} />
         </Dropdown>
       }
-      { !user &&
+      { !isLoggedIn &&
         <>
-          <Button type="link">Sign up</Button>
+          <Link to="/signup">
+            <Button type="link">Sign up</Button>
+          </Link>
           <Link to="/signin">
             <Button type="link">Sign in</Button>
           </Link>

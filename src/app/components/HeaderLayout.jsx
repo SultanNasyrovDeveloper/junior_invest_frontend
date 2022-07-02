@@ -15,7 +15,7 @@ const HeaderLayout = (props) => {
         <span
           onClick={() => navigate('/')}
           style={{cursor: 'pointer'}}
-        >Junior invest</span>
+        >Junior Invest</span>
       </Col>
       <Col span={12}>
 
