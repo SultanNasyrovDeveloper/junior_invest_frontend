@@ -1,6 +1,6 @@
 import { MenuOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
 import HomePage from 'apps/home';
@@ -16,6 +16,7 @@ import {
   ProjectListPage,
   NewProjectPage
 } from 'apps/project';
+import { appStore } from 'store';
 
 import {
   Layout,
@@ -25,21 +26,14 @@ import {
   SidebarMenu
 } from './components';
 import { NotFoundPage } from './pages';
-import { appSelectors, appActions } from './store';
 
 function App() {
-
-  const dispatch = useDispatch();
-  const isShowNavigation = useSelector(appSelectors.getIsShowNavigation)
 
   return (
     <Layout
       header={
         <HeaderLayout
-          burgerIcon={<MenuOutlined
-            onClick={() => dispatch(appActions.toggleNavigation())}
-          />}
-
+          burgerIcon={<MenuOutlined onClick={() => appStore.toggleSidebar()}/>}
           userMenu={<UserMenu/>}
         />
       }
@@ -47,8 +41,8 @@ function App() {
       navigationPanel={
         <SidebarMenu />
       }
-      isShowNavigation={isShowNavigation}
-      onNavigationClose={() => dispatch(appActions.closeNavigation())}
+      isShowNavigation={appStore.isSidebarVisible}
+      onNavigationClose={() => appStore.closeSidebar()}
       content={
         <Routes>
           {/* public routes */}
@@ -59,11 +53,13 @@ function App() {
           <Route path="/password/reset" element={<ResetPasswordPage />} />
           <Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordConfirmPage />} />
 
+          <Route path="/projects" element={<ProjectListPage />} />
+
 
           {/* protected routes */}
           <Route element={<RequiresAuth />}>
             <Route path="/profile" element={<UserProfilePage />} />
-            <Route path="/projects" element={<ProjectListPage />} />
+
             <Route path="/projects/new" element={<NewProjectPage />} />
           </Route>
 
@@ -75,4 +71,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);

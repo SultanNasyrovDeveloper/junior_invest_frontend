@@ -1,26 +1,36 @@
-import React, { useMemo } from 'react';
 import { Form, Input, Select } from "antd";
-import { useSelector } from "react-redux";
+import _ from 'lodash';
+import { observer } from 'mobx-react-lite';
+import React, { useMemo } from 'react';
 
-import { projectSelectors } from '../../store';
+import { projectStore } from 'store';
 
-const GeneralInfoForm = (props) => {
+const GeneralInfoForm = ({ formRef}) => {
 
-  const { initialValues, formRef } = props;
-  const projectCategories = useSelector(projectSelectors.getProjectCategories);
+  const initialValues = useMemo(() => {
+    if (projectStore.myNewProject?.id) {
+      return _.pick(
+        projectStore.myNewProject,
+        ['name', 'category', 'description']
+      );
+    }
+    return null;
+  }, [projectStore.myNewProject]);
 
-  const projectCategoryOptions = useMemo(() => {
-    return projectCategories?.map(category => {
-      return { label: category.name, value: category.id };
-    })
-  }, [projectCategories]);
+  const categoryOptions = useMemo(() => {
+    const categoriesList = projectStore.projectCategories || [];
+    return categoriesList.map(category => ({
+      value: category.id,
+      label: category.name
+    }));
+  }, [projectStore.projectCategories]);
 
   return (
     <Form
       name="project"
       ref={formRef}
       layout="vertical"
-      initialValues={ initialValues }
+      initialValues={initialValues}
     >
       <Form.Item
         label="Category"
@@ -28,7 +38,7 @@ const GeneralInfoForm = (props) => {
         rules={[{ required: true, message: 'Please enter project name!' }]}
       >
         <Select
-          options={projectCategoryOptions}
+          options={categoryOptions}
         />
       </Form.Item>
 
@@ -52,4 +62,4 @@ const GeneralInfoForm = (props) => {
   );
 };
 
-export default GeneralInfoForm;
+export default observer(GeneralInfoForm);

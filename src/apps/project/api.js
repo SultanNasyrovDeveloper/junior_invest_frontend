@@ -1,48 +1,53 @@
 import _ from 'lodash';
 
-import { projectCategoriesUrl, projectsUrl } from 'api/urls';
+import {
+  projectCategoriesUrl,
+  projectsUrl,
+  projectDetailUrl
+} from 'api/urls';
 import { client } from 'api';
-
-import { projectActions } from './store';
 
 export const fetchProjectCategories = async (dispatch) => {
   try {
-    const response = await client.get(projectCategoriesUrl);
-    dispatch(
-      projectActions.setProjectCategories(
-        { categories: _.get(response, 'data.results') }
-      )
+    const response = await client.get(
+      projectCategoriesUrl,
+      { params: { limit: 5000 }}
     );
+    return _.get(response, 'data.results')
   } catch(error) {
     console.error(error);
     throw error;
   }
 };
 
-export const fetchMyNewProject = async (dispatch, getState) => {
-  const state = getState();
+export const fetchMyNewProject = async (userId) => {
   try {
     const queryParams = {
       filled: false,
-      author: state.user.user.id,
+      author: userId,
       limit: 1
     }
     const response = await client.get(projectsUrl, { params: queryParams });
-    const myNewProject = _.get(response, 'data.results.0');
-    if (myNewProject) {
-      dispatch(projectActions.setNewProject(
-        { project: myNewProject }
-      ));
-    }
+    return  _.get(response, 'data.results.0');
   } catch(error) {
     throw error;
   }
 };
 
-export const createProject = (projectData) => async (dispatch) => {
+export const createProject = async (projectData) => {
   try {
     const response = await client.post(projectsUrl, projectData);
+    return _.get(response, 'data');
+  }
+  catch(error) {
+    throw error;
+  }
+};
 
+export const updateProject = async (projectId, updateData) => {
+  try {
+    const response = await client.patch(projectDetailUrl(projectId), updateData);
+    return _.get(response, 'data');
   }
   catch(error) {
     throw error;

@@ -1,13 +1,11 @@
 import { client } from 'api';
 import { myUserUrl } from 'api/urls';
 
-import { userActions } from './store';
 
-export const fetchMe = async (dispatch) => {
+export const fetchMe = async () => {
   try {
     const response = await client.get(myUserUrl);
-    const user = response.data;
-    dispatch(userActions.setUser({ user }));
+    return response.data;
   } catch(error) {
     console.error(error);
   }

@@ -1,2 +1,9 @@
-export { default } from './slice';
-export { actions as userActions } from './slice';
+import { makeAutoObservable } from 'mobx';
+
+class UserStore {
+  user = {};
+
+  constructor() {
+    makeAutoObservable(this);
+  }
+}

@@ -1,71 +1,86 @@
-import { PageHeader, Row, Col, Card, Button } from 'antd';
+import { PageHeader, Row, Col, Card, Button, Spin } from 'antd';
+import { useAsync } from 'react-use';
 import React, {
   useState,
   useMemo,
-  useEffect,
   useRef,
   useCallback
 } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
+import { userStore, projectStore } from 'store';
 import {
   fetchProjectCategories,
+  fetchMyNewProject,
   createProject,
-  fetchMyNewProject
+  updateProject
 } from '../api';
 import {
+  ProjectFormCardStyled,
   FormSteps,
   GeneralInfoForm,
   PresentationForm,
 } from '../components';
-import { projectSelectors } from '../store';
 
 const NewProjectPage = () => {
-  const dispatch = useDispatch();
 
   const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [projectIsUploading, setProjectIsUploading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const projectCategories = useSelector(
-    projectSelectors.getProjectCategories
-  );
-  const newProject = useSelector(projectSelectors.getNewProject);
-
-  const formProps = useMemo(() => {
-    return {
-      formRef: formRef,
-      initialValues: newProject
-    }
-  }, [formRef, newProject]);
 
   const currentForm = useMemo(() => {
 
     if (currentStep === 0) {
-      return <GeneralInfoForm {...formProps} />;
+      return <GeneralInfoForm formRef={formRef} />;
     }
     if (currentStep === 1) {
-      return <PresentationForm {...formProps}/>;
+      return <PresentationForm formRef={formRef} />;
     }
-  }, [currentStep, formProps]);
+  }, [currentStep]);
 
   const handleNextStepClick = useCallback(async () => {
-    try {
-      const validatedData = await formRef.current.validateFields();
-      dispatch(createProject(validatedData))
-
-    } catch (error) {
-      console.log('Form is not valid');
+    debugger;
+    if (formRef.current.isFieldsTouched()) {
+      try {
+        setProjectIsUploading(true);
+        const validatedData = await formRef.current.validateFields();
+        if (projectStore.myNewProject?.id) {
+          const updatedProject = await updateProject(
+            projectStore.myNewProject.id,
+            validatedData
+          );
+          projectStore.updateMyNewProject(updatedProject);
+        }
+        else {
+          const newProject = await createProject(validatedData);
+          projectStore.setMyNewProject(newProject);
+        }
+      } catch (error) {
+        console.log('Form is not valid');
+        return;
+      }
+      finally {
+        setProjectIsUploading(false);
+      }
     }
-  }, [formRef]);
+    setCurrentStep(previousStepValue => previousStepValue + 1);
+  }, [formRef, projectStore.myNewProject]);
 
-  useEffect(() => {
+  useAsync(async () => {
     setIsLoading(true);
-    console.log('Is loading')
-    dispatch(fetchMyNewProject)
-    if (!projectCategories) {
-      dispatch(fetchProjectCategories);
+    try {
+      const projectCategories = await fetchProjectCategories();
+      const myNewProject = await fetchMyNewProject(userStore.id);
+      console.log(myNewProject);
+      projectStore.setProjectCategories(projectCategories);
+      projectStore.setMyNewProject(myNewProject);
     }
-    setIsLoading(false);
+    catch (error) {
+      console.log(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }, []);
 
   return (
@@ -84,6 +99,7 @@ const NewProjectPage = () => {
               currentStep < 4 &&
               <Button
                 type="primary"
+                loading={projectIsUploading}
                 onClick={handleNextStepClick}
               >
                 Сохранить и продолжить
@@ -103,12 +119,10 @@ const NewProjectPage = () => {
 
       <Row>
         <Col span={24}>
-          {
-            !isLoading &&
-            <Card>
-              { currentForm }
-            </Card>
-          }
+          <ProjectFormCardStyled>
+            <Spin spinning={isLoading} delay={100} />
+            { !isLoading && currentForm }
+          </ProjectFormCardStyled>
         </Col>
       </Row>
     </>

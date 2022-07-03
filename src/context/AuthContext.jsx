@@ -1,18 +1,20 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { observer } from 'mobx-react-lite';
+import { useAsync } from 'react-use';
+import React, { createContext, useState } from 'react';
 
+import { userStore } from 'store';
 import AuthService from 'apps/auth/service';
 import { fetchMe } from 'apps/user/api';
 
 const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }) => {
-  const dispatch = useDispatch();
+const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => AuthService.isLoggedIn);
 
-  useEffect(() => {
+  useAsync(async () => {
     if (isLoggedIn) {
-      dispatch(fetchMe);
+      const user = await fetchMe();
+      userStore.setUser(user);
     }
   }, []);
 
@@ -24,3 +26,4 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
+export const ObservableAuthProvider = observer(AuthProvider);

@@ -34,7 +34,6 @@ client.interceptors.response.use(
   async function (error) {
 
     const originalConfig = error.config;
-
     const logout = () => {
       AuthService.logout();
       window.location.replace('/signin');

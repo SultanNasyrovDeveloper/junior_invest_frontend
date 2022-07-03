@@ -13,10 +13,12 @@ import {
   PayCircleOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { userStore } from 'store';
 import { useAuth, useLogout } from 'apps/auth/hooks';
 
 const StyledUserMenuIcon = styled(UserOutlined)`
@@ -50,6 +52,9 @@ const UserMenu = () => {
           overlay={
             <StyledUserMenuCard>
               <List>
+                <ListItemStyled>
+                  { userStore.email }
+                </ListItemStyled>
                 <ListItemStyled
                   key="profile"
                   onClick={() => navigate('/profile')}
@@ -107,4 +112,4 @@ const UserMenu = () => {
   );
 };
 
-export default UserMenu;
+export default observer(UserMenu);

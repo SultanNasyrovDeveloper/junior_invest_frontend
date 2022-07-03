@@ -1,9 +1,10 @@
 import { Row, Col, Card } from 'antd';
+import { observer } from 'mobx-react-lite';
 import React, { useCallback, useMemo, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTitle } from 'react-use';
 
+import { userStore } from 'store';
 import { fetchMe } from 'apps/user/api';
 
 import { login } from '../api';
@@ -13,7 +14,6 @@ import AuthService from '../service';
 
 const SigninPage = () => {
   useTitle('Вход в систему')
-  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoggedIn, setIsLoggedIn } = useAuth();
@@ -27,18 +27,19 @@ const SigninPage = () => {
       const tokens = await login(credentials);
       AuthService.login(tokens);
       setIsLoggedIn(true);
+      const user = await fetchMe();
+      userStore.setUser(user);
     } catch(error) {
       console.log(error);
     }
-    await dispatch(fetchMe);
     navigate(targetLocation);
-  }, [dispatch, setIsLoggedIn, targetLocation]);
+  }, [setIsLoggedIn, targetLocation]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate(targetLocation);
-    }
-  }, [isLoggedIn, targetLocation]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     navigate(targetLocation);
+  //   }
+  // }, [isLoggedIn, targetLocation]);
 
   return (
     <Row justify="center">
@@ -51,4 +52,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default observer(SigninPage);
