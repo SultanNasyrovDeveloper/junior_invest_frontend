@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios from 'axios';
 
 import { AuthService } from 'apps/auth';
@@ -34,20 +35,24 @@ client.interceptors.response.use(
   async function (error) {
 
     const originalConfig = error.config;
+    if (error.code === 'ERR_NETWORK') {
+      message.error('Не получается подключится к серверу. Проверьте свое интернет соединение или обратитесь к администратору сервера')
+    }
+
     const logout = () => {
       AuthService.logout();
       window.location.replace('/signin');
-    }
-
-    if (!AuthService.accessToken) {
-      logout();
     }
 
     if (originalConfig.retry) {
       logout();
     }
 
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
+      if (!AuthService.accessToken) {
+        logout();
+      }
+
       try {
 
         originalConfig.retry = true;

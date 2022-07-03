@@ -7,7 +7,7 @@ import { useTitle } from 'react-use';
 import { userStore } from 'store';
 import { fetchMe } from 'apps/user/api';
 
-import { login } from '../api';
+import { signin } from '../api';
 import { SigninForm } from '../components';
 import { useAuth } from '../hooks';
 import AuthService from '../service';
@@ -24,7 +24,7 @@ const SigninPage = () => {
 
   const handleFormSubmit = useCallback(async (credentials) => {
     try {
-      const tokens = await login(credentials);
+      const tokens = await signin(credentials);
       AuthService.login(tokens);
       setIsLoggedIn(true);
       const user = await fetchMe();
@@ -35,11 +35,11 @@ const SigninPage = () => {
     navigate(targetLocation);
   }, [setIsLoggedIn, targetLocation]);
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate(targetLocation);
-  //   }
-  // }, [isLoggedIn, targetLocation]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(targetLocation);
+    }
+  }, [isLoggedIn, targetLocation]);
 
   return (
     <Row justify="center">

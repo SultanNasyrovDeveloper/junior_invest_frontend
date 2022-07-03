@@ -41,7 +41,6 @@ const PresentationForm = ({ formRef }) => {
             </Typography.Text>
           }
 
-
           <Upload.Dragger
             name="files"
             maxCount={1}

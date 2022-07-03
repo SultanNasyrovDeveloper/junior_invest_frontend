@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useAsync } from 'react-use';
 import React, { createContext, useState } from 'react';
@@ -13,8 +14,12 @@ const AuthProvider = ({ children }) => {
 
   useAsync(async () => {
     if (isLoggedIn) {
-      const user = await fetchMe();
-      userStore.setUser(user);
+      try {
+        const user = await fetchMe();
+        userStore.setUser(user);
+      } catch(error) {
+
+      }
     }
   }, []);
 

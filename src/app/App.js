@@ -8,9 +8,11 @@ import UserProfilePage from 'apps/user';
 import {
   SigninPage,
   SignupPage,
+  RegistrationSuccessPage,
   ActivateAccountPage,
   ResetPasswordPage,
   ResetPasswordConfirmPage,
+  ActivationSuccessPage
 } from 'apps/auth';
 import {
   ProjectListPage,
@@ -49,17 +51,17 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/registration/success" element={<RegistrationSuccessPage />} />
           <Route path="/activate/:uid/:token" element={<ActivateAccountPage />} />
+          <Route path="/activation/success" element={<ActivationSuccessPage />} />
           <Route path="/password/reset" element={<ResetPasswordPage />} />
           <Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordConfirmPage />} />
 
           <Route path="/projects" element={<ProjectListPage />} />
 
-
           {/* protected routes */}
           <Route element={<RequiresAuth />}>
             <Route path="/profile" element={<UserProfilePage />} />
-
             <Route path="/projects/new" element={<NewProjectPage />} />
           </Route>
 

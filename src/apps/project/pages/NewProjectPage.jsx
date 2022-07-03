@@ -39,7 +39,6 @@ const NewProjectPage = () => {
   }, [currentStep]);
 
   const handleNextStepClick = useCallback(async () => {
-    debugger;
     if (formRef.current.isFieldsTouched()) {
       try {
         setProjectIsUploading(true);
