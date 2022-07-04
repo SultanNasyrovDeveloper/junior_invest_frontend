@@ -37,36 +37,27 @@ const GeneralInfoFormPage = () => {
   }, [initialValues, setHasChanged]);
 
   const handleSubmit = useCallback(async (validatedData) => {
-
-    let apiAction;
-    let storeAction;
-    let apiActionArgs;
-    if (projectStore.myNewProject?.id) {
-      apiAction = updateProject;
-      storeAction = projectStore.updateMyNewProject;
-      apiActionArgs = {
-        projectId: projectStore.myNewProject.id,
-        updateData: validatedData
-      };
-    }
-    else {
-      apiAction = createProject;
-      storeAction = projectStore.setMyNewProject;
-      apiActionArgs = { projectData: validatedData };
-    }
     setIsLoading(true);
-    
     try {
-      const project = await apiAction(...apiActionArgs);
-      storeAction(project);
-      navigate('/projects/new/presentation')
+      if (projectStore.myNewProject?.id) {
+        const updatedProject = await updateProject(
+          projectStore.myNewProject.id,
+          validatedData
+        );
+        projectStore.updateMyNewProject(updatedProject);
+      } else {
+        const newProject = await createProject(validatedData);
+        projectStore.setMyNewProject(newProject);
+      }
+      navigate('/projects/new/presentation');
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
     finally {
       setIsLoading(false);
     }
+
   }, []);
 
   useEffectOnce(() => {
