@@ -1,11 +1,10 @@
 import { Form, Input, Select, Button, Space } from 'antd';
 import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
-import React, { useState, useMemo, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffectOnce } from 'react-use';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-import { projectStore } from 'store';
+import { projectStore, newProjectStore } from 'store';
 import { updateProject, createProject} from '../api';
 
 const GeneralInfoFormPage = () => {
@@ -13,16 +12,17 @@ const GeneralInfoFormPage = () => {
   const [hasChanged, setHasChanged] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation()
 
   const initialValues = useMemo(() => {
-    if (projectStore.myNewProject?.id) {
+    if (newProjectStore.id) {
       return _.pick(
-        projectStore.myNewProject,
+        newProjectStore.project,
         ['name', 'category', 'description']
       );
     }
     return null;
-  }, [projectStore.myNewProject]);
+  }, [newProjectStore.project]);
 
   const categoryOptions = useMemo(() => {
     const categoriesList = projectStore.projectCategories || [];
@@ -39,15 +39,15 @@ const GeneralInfoFormPage = () => {
   const handleSubmit = useCallback(async (validatedData) => {
     setIsLoading(true);
     try {
-      if (projectStore.myNewProject?.id) {
+      if (newProjectStore.id) {
         const updatedProject = await updateProject(
-          projectStore.myNewProject.id,
+          newProjectStore.id,
           validatedData
         );
-        projectStore.updateMyNewProject(updatedProject);
+        newProjectStore.updateProject(updatedProject);
       } else {
         const newProject = await createProject(validatedData);
-        projectStore.setMyNewProject(newProject);
+        newProjectStore.setProject(newProject);
       }
       navigate('/projects/new/presentation');
     }
@@ -60,9 +60,9 @@ const GeneralInfoFormPage = () => {
 
   }, []);
 
-  useEffectOnce(() => {
-    projectStore.setNewProjectFormStep(0);
-  });
+  useEffect(() => {
+    newProjectStore.setCurrentStep(0);
+  }, [location]);
 
   return (
     <Form

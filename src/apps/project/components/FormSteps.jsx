@@ -1,5 +1,4 @@
 import { Steps } from 'antd';
-import React from 'react';
 import {
   ContainerOutlined,
   FileAddOutlined,
@@ -7,14 +6,16 @@ import {
   SnippetsOutlined,
   YoutubeOutlined
 } from "@ant-design/icons";
+import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-const FormSteps = (props) => {
+import { newProjectStore } from 'store';
 
-  const { currentStep } = props;
+const FormSteps = () => {
 
   return (
     <Steps
-      current={currentStep}
+      current={newProjectStore.currentStep}
       labelPlacement="vertical"
     >
       <Steps.Step
@@ -41,4 +42,4 @@ const FormSteps = (props) => {
   );
 };
 
-export default FormSteps;
+export default observer(FormSteps);
