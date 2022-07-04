@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProjectPage = () => {
+const VideoFormPage = () => {
   return (
     <div>
 
@@ -8,4 +8,4 @@ const ProjectPage = () => {
   );
 };
 
-export default ProjectPage;
+export default VideoFormPage;

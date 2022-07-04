@@ -1,2 +1,2 @@
-export * from './ProjectForm';
 export * from './components.styled';
+export { default as FormSteps } from './FormSteps';

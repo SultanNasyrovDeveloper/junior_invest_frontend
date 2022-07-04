@@ -1,6 +1,6 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 
-import { useAuth } from 'app/hooks';
+import { useAuth } from '../hooks';
 
 const RequiresAuth = () => {
   const { isLoggedIn } = useAuth();

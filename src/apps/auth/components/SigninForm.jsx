@@ -9,17 +9,12 @@ const SigninForm = (props) => {
     onSubmit(data);
   }, []);
 
-  const onFinishFailed = useCallback(() => {
-    console.log('Signin Form Failed');
-  }, []);
-
   return (
     <Form
       name="basic"
       initialValues={{ remember: true }}
       layout="vertical"
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item

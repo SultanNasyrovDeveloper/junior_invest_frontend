@@ -8,6 +8,7 @@ import UserProfilePage from 'apps/user';
 import {
   SigninPage,
   SignupPage,
+  RequiresAuth,
   RegistrationSuccessPage,
   ActivateAccountPage,
   ResetPasswordPage,
@@ -16,13 +17,18 @@ import {
 } from 'apps/auth';
 import {
   ProjectListPage,
-  NewProjectPage
+  NewProjectPage,
+  FilesFormPage,
+  GeneralInfoFormPage,
+  ImagesFormPage,
+  PresentationFormPage,
+  ProjectPage,
+  VideoFormPage
 } from 'apps/project';
 import { appStore } from 'store';
 
 import {
   Layout,
-  RequiresAuth,
   HeaderLayout,
   UserMenu,
   SidebarMenu
@@ -62,7 +68,13 @@ function App() {
           {/* protected routes */}
           <Route element={<RequiresAuth />}>
             <Route path="/profile" element={<UserProfilePage />} />
-            <Route path="/projects/new" element={<NewProjectPage />} />
+            <Route element={<NewProjectPage />}>
+              <Route path="/projects/new/general" element={<GeneralInfoFormPage />} />
+              <Route path="/projects/new/presentation" element={<PresentationFormPage />} />
+              <Route path="/projects/new/video" element={<VideoFormPage />} />
+              <Route path="/projects/new/images" element={<ImagesFormPage />} />
+              <Route path="/projects/new/files" element={<FilesFormPage />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<NotFoundPage />} />

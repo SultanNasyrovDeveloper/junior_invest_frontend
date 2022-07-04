@@ -6,17 +6,19 @@ class UserStore {
 
   constructor() {
     makeAutoObservable(this);
+  }
 
+  get id() {
+    return _.get(this.user, 'id');
   }
 
   get email() {
-    return _.get(this.user, 'email');
+    return _.get(this.user, 'email', 'Not found');
   }
 
-  setUser(user) {
-    this.user = user;
+  setUser(newUser) {
+    this.user = newUser;
   }
 }
-
 
 export default new UserStore();

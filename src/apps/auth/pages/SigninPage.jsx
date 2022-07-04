@@ -4,8 +4,8 @@ import React, { useCallback, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTitle } from 'react-use';
 
-import { userStore } from 'store';
-import { fetchMe } from 'apps/user/api';
+import { userStore } from '../../../store';
+import { fetchMe } from '../../user/api';
 
 import { signin } from '../api';
 import { SigninForm } from '../components';
@@ -44,7 +44,7 @@ const SigninPage = () => {
   return (
     <Row justify="center">
       <Col span={8}>
-        <Card title="SignIn form">
+        <Card title="Авторизация">
           <SigninForm onSubmit={handleFormSubmit}/>
         </Card>
       </Col>

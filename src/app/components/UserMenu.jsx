@@ -19,7 +19,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { userStore } from 'store';
-import { useAuth, useLogout } from 'apps/auth/hooks';
+import { useAuth, useLogout } from 'apps/auth';
 
 const StyledUserMenuIcon = styled(UserOutlined)`
   cursor: pointer;

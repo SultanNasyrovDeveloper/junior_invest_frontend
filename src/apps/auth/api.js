@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
-import { client } from 'api';
+import { client } from '../../api';
 import {
   tokenObtainUrl,
   usersUrl,
   activateAccountUrl
-} from 'api/urls';
+} from '../../api/urls';
 
 export const signin = async (credentials) => {
   const response = await client.post(tokenObtainUrl, credentials);

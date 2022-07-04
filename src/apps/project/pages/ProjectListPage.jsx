@@ -9,7 +9,7 @@ const ProjectListPage = () => {
         title="Projects list"
         ghost={false}
         extra={
-          <Link to="/projects/new">
+          <Link to="/projects/new/general">
             <Button type="primary">Create</Button>
           </Link>
         }

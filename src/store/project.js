@@ -4,6 +4,7 @@ import { makeAutoObservable } from 'mobx';
 class ProjectStore {
   projectCategories = null;
   myNewProject = null;
+  newProjectFormStep = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -19,6 +20,10 @@ class ProjectStore {
 
   updateMyNewProject(updateData) {
     this.myNewProject = _.merge(this.myNewProject, updateData);
+  }
+
+  setNewProjectFormStep(step) {
+    this.newProjectFormStep = step;
   }
 }
 
