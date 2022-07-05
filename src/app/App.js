@@ -73,7 +73,6 @@ function App() {
               <Route path="/projects/new/presentation" element={<PresentationFormPage />} />
               <Route path="/projects/new/video" element={<VideoFormPage />} />
               <Route path="/projects/new/images" element={<ImagesFormPage />} />
-              <Route path="/projects/new/files" element={<FilesFormPage />} />
             </Route>
           </Route>
 

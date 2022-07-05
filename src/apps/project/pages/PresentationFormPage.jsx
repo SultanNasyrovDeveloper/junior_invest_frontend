@@ -1,10 +1,11 @@
-import {Upload, Form, Typography, Space, Button} from 'antd';
+import { Upload, Form, Typography, Space, Button} from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
+import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { newProjectStore } from 'store';
+import {newProjectStore, projectStore} from 'store';
 
 import { updateProject } from '../api';
 
@@ -21,6 +22,7 @@ const PresentationFormPage = () => {
 
   const projectPresentation = useMemo(() => {
     if (newProjectStore.presentation) {
+      debugger;
       const presentation = newProjectStore.presentation;
       return {
         name: presentation.name,
@@ -30,6 +32,7 @@ const PresentationFormPage = () => {
   }, [newProjectStore.presentation]);
 
   const handleChange = useCallback((event) => {
+    debugger;
     setHasChanged(true);
     setShowSizeErrorText(false);
     if (event?.file.status === 'removed') {
@@ -55,6 +58,8 @@ const PresentationFormPage = () => {
         files[0].name
       )
       newProjectStore.updateProject(updatedProject);
+      setHasChanged(false);
+      navigate('/projects/new/video')
     }
     catch(error) {
       console.log(error);
@@ -65,12 +70,16 @@ const PresentationFormPage = () => {
   }, [files, newProjectStore.project]);
 
   useEffect(() => {
-    setFiles([projectPresentation]);
+    if (projectPresentation) {
+      setFiles([projectPresentation]);
+    }
   }, [projectPresentation]);
 
   useEffect(() => {
     newProjectStore.setCurrentStep(1);
   }, [location, newProjectStore.project]);
+
+  console.log(files)
 
   return (
     <Form layout="vertical">
@@ -97,8 +106,8 @@ const PresentationFormPage = () => {
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+            <p className="ant-upload-text">Нажмите или перетащите файл для загрузки</p>
+            <p className="ant-upload-hint">Доступна загрузка файла в форматах .pps, .ppsx, .ppt, .pptx размером до 5 МБ</p>
           </Upload.Dragger>
         </Form.Item>
       </Form.Item>
@@ -110,14 +119,15 @@ const PresentationFormPage = () => {
               <Button>Предыдущий шаг</Button>
             </Link>
             <Link to="/projects/new/video">
-              <Button>Пропустить</Button>
+              <Button
+                disabled={_.isEmpty(files)}
+              >Пропустить</Button>
             </Link>
             <Button
               type="primary"
-              htmlType="submit"
               onClick={handleSubmit}
               loading={uploading}
-              disabled={!hasChanged}
+              disabled={!hasChanged || _.isEmpty(files)}
             >Сохранить и продолжить</Button>
           </Space>
         </div>

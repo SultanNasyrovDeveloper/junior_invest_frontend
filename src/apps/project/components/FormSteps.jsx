@@ -1,7 +1,6 @@
 import { Steps } from 'antd';
 import {
   ContainerOutlined,
-  FileAddOutlined,
   FileImageOutlined,
   SnippetsOutlined,
   YoutubeOutlined
@@ -33,10 +32,6 @@ const FormSteps = () => {
       <Steps.Step
         title="Изображения"
         icon={<FileImageOutlined />}
-      />
-      <Steps.Step
-        title="Материалы"
-        icon={<FileAddOutlined />}
       />
     </Steps>
   );

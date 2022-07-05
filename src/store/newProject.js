@@ -18,6 +18,10 @@ class NewProjectStore {
     return _.get(this.project, 'presentation');
   }
 
+  get youtubeVideoUrl() {
+    return _.get(this.project, 'youtube_video_url');
+  }
+
   setProject(project) {
     this.project = project;
   }

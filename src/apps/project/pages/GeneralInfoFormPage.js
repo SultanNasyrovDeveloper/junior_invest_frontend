@@ -1,16 +1,16 @@
-import { Form, Input, Select, Button, Space } from 'antd';
 import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { projectStore, newProjectStore } from 'store';
 import { updateProject, createProject} from '../api';
 
+import { GeneralInfoForm } from '../components';
+
 const GeneralInfoFormPage = () => {
 
-  const [hasChanged, setHasChanged] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation()
 
@@ -21,7 +21,7 @@ const GeneralInfoFormPage = () => {
         ['name', 'category', 'description']
       );
     }
-    return null;
+    return {};
   }, [newProjectStore.project]);
 
   const categoryOptions = useMemo(() => {
@@ -32,12 +32,8 @@ const GeneralInfoFormPage = () => {
     }));
   }, [projectStore.projectCategories]);
 
-  const handleValuesChange = useCallback((changed, allValues) => {
-    setHasChanged(!_.isEqual(allValues, initialValues));
-  }, [initialValues, setHasChanged]);
-
   const handleSubmit = useCallback(async (validatedData) => {
-    setIsLoading(true);
+    setIsUploading(true);
     try {
       if (newProjectStore.id) {
         const updatedProject = await updateProject(
@@ -55,9 +51,12 @@ const GeneralInfoFormPage = () => {
       console.log(error);
     }
     finally {
-      setIsLoading(false);
+      setIsUploading(false);
     }
+  }, []);
 
+  const handleNext = useCallback(() => {
+    navigate('/projects/new/presentation');
   }, []);
 
   useEffect(() => {
@@ -65,55 +64,13 @@ const GeneralInfoFormPage = () => {
   }, [location]);
 
   return (
-    <Form
-      name="project"
-      layout="vertical"
+    <GeneralInfoForm
       initialValues={initialValues}
-      onFinish={handleSubmit}
-      onValuesChange={handleValuesChange}
-    >
-      <Form.Item
-        label="Category"
-        name="category"
-        rules={[{ required: true, message: 'Please enter project name!' }]}
-      >
-        <Select
-          options={categoryOptions}
-        />
-      </Form.Item>
-      <Form.Item
-        label="Name"
-        name="name"
-        rules={[{ required: true, message: 'Please enter project name!' }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Description"
-        name="description"
-        rules={[{ required: true, message: 'Please enter project name!' }]}
-      >
-        <Input.TextArea rows={4}/>
-      </Form.Item>
-
-      <Form.Item>
-        <div style={{ display: 'flex', justifyContent: 'end' }}>
-          <Space>
-            <Link to="/projects/new/presentation">
-              <Button
-                disabled={!!initialValues && hasChanged }
-              >Пропустить</Button>
-            </Link>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={!hasChanged}
-              loading={isLoading}
-            >Сохранить и продолжить</Button>
-          </Space>
-        </div>
-      </Form.Item>
-    </Form>
+      categoryOptions={categoryOptions}
+      onSubmit={handleSubmit}
+      isUploading={isUploading}
+      onNext={handleNext}
+    />
   );
 };
 

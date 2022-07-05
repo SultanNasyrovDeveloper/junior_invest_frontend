@@ -19,10 +19,14 @@ const NewProjectPage = () => {
   useAsync(async () => {
     setIsLoading(true);
     try {
-      const projectCategories = await fetchProjectCategories();
-      const myNewProject = await fetchMyNewProject(userStore.id);
-      projectStore.setProjectCategories(projectCategories);
-      newProjectStore.setProject(myNewProject);
+      if (!projectStore.projectCategories) {
+        const projectCategories = await fetchProjectCategories();
+        projectStore.setProjectCategories(projectCategories);
+      }
+      if (!newProjectStore.project) {
+        const myNewProject = await fetchMyNewProject(userStore.id);
+        newProjectStore.setProject(myNewProject);
+      }
       if (
         location?.pathname !== '/projects/new/general' &&
         !newProjectStore.id
