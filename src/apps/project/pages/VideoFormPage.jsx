@@ -7,8 +7,6 @@ import { newProjectStore } from 'store';
 import { updateProject } from '../api';
 import { YoutubeVideoForm } from '../components'
 
-const youtubeVideoStart = 'https://www.youtube.com/watch?v=';
-
 const VideoFormPage = () => {
 
   const location = useLocation();

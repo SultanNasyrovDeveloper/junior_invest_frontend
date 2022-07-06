@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import {newProjectStore, projectStore} from 'store';
+import { newProjectStore } from 'store';
 
 import { updateProject } from '../api';
 
@@ -22,7 +22,6 @@ const PresentationFormPage = () => {
 
   const projectPresentation = useMemo(() => {
     if (newProjectStore.presentation) {
-      debugger;
       const presentation = newProjectStore.presentation;
       return {
         name: presentation.name,
@@ -32,7 +31,6 @@ const PresentationFormPage = () => {
   }, [newProjectStore.presentation]);
 
   const handleChange = useCallback((event) => {
-    debugger;
     setHasChanged(true);
     setShowSizeErrorText(false);
     if (event?.file.status === 'removed') {

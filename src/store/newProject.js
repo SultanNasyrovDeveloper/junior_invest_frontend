@@ -22,8 +22,16 @@ class NewProjectStore {
     return _.get(this.project, 'youtube_video_url');
   }
 
+  get images() {
+    return _.get(this.project, 'images');
+  }
+
   setProject(project) {
     this.project = project;
+  }
+
+  deleteProject() {
+    this.project = null;
   }
 
   setCurrentStep(step) {
@@ -32,6 +40,16 @@ class NewProjectStore {
 
   updateProject(project) {
     this.project = _.merge(this.project, project);
+  }
+
+  addProjectImage(image) {
+    this.project.images.push(image);
+  }
+
+  deleteProjectImage(imageId) {
+    this.project.images = this.project?.images.filter(
+      image => image.id !== imageId
+    );
   }
 }
 

@@ -23,12 +23,15 @@ const GeneralInfoForm = (props) => {
       validateOnChange={true}
       onSubmit={onSubmit}
     >
-      {({ touched, isValid }) => (
+      {({ touched, isValid, values }) => (
+
+
         <Form layout="vertical">
           <Form.Item label="Категория" name="category">
             <Select name="category" options={categoryOptions}/>
           </Form.Item>
-
+          {console.log(isValid)}
+          {console.log(values)}
           <Form.Item label="Название" name="name">
             <Input name="name" showCount={true} />
           </Form.Item>
@@ -40,7 +43,7 @@ const GeneralInfoForm = (props) => {
             <Space>
               <Button
                 onClick={onNext}
-                disabled={!_.isEmpty(touched)}
+                disabled={!isValid || !_.isEmpty(touched) || _.isEmpty(values)}
               >Пропустить</Button>
               <Button
                 type="primary"

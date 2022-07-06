@@ -3,7 +3,9 @@ import _ from 'lodash';
 import {
   projectCategoriesUrl,
   projectsUrl,
-  projectDetailUrl
+  projectDetailUrl,
+  projectImagesUrl,
+  projectImageDetailUrl,
 } from 'api/urls';
 import { client } from 'api';
 
@@ -53,3 +55,24 @@ export const updateProject = async (projectId, updateData) => {
     throw error;
   }
 };
+
+export const createProjectImage = async (projectId, formData, clientConfig=null) => {
+  try {
+    formData.append('project', projectId);
+    const response = await client.post(projectImagesUrl, formData, clientConfig);
+    return _.get(response, 'data');
+  }
+  catch(error) {
+    throw error;
+  }
+};
+
+export const deleteProjectImage = async (imageId) => {
+  try {
+    await client.delete(projectImageDetailUrl(imageId));
+  }
+  catch(error) {
+    throw error;
+  }
+};
+

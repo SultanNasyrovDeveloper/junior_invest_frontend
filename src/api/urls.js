@@ -8,9 +8,11 @@ export const usersUrl = 'auth/users/';
 export const myUserUrl = 'auth/users/me/';
 
 
-export const projectCategoriesUrl = 'project/project_categories/';
+export const projectCategoriesUrl = 'project/categories/';
 
 export const projectsUrl = 'project/projects/';
 export const projectDetailUrl = (projectId) => {
   return `project/projects/${projectId}/`;
-}
+};
+export const projectImagesUrl = 'project/images/';
+export const projectImageDetailUrl = (imageId) => `project/images/${imageId}/`;
