@@ -2,7 +2,8 @@ import { makeAutoObservable } from 'mobx';
 
 class ProjectStore {
   projectCategories = null;
-  myNewProject = null;
+  projectList = [];
+  projectDetail = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -10,6 +11,10 @@ class ProjectStore {
 
   setProjectCategories(projectCategories) {
     this.projectCategories = projectCategories;
+  }
+
+  setProjects(projectsList) {
+    this.projectsList = projectsList;
   }
 
 }

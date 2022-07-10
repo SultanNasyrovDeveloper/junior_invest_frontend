@@ -18,6 +18,7 @@ const getBase64 = (file)  =>
 const maxImageSize = 1024 * 1000 * 3;
 
 const ImagesFormPage = () => {
+
   const location = useLocation();
   const navigate = useNavigate();
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -49,7 +50,6 @@ const ImagesFormPage = () => {
   };
 
   const handleRemove = useCallback(async (file) => {
-    debugger;
     const imageId = file.response.id;
     try {
       await deleteProjectImage(imageId);
@@ -98,7 +98,7 @@ const ImagesFormPage = () => {
   const handleSubmit = useCallback(async () => {
     try {
       try {
-        await updateProject(newProjectStore.id, { filled: true});
+        await updateProject(newProjectStore.id, { status: 'filled' });
         newProjectStore.deleteProject();
         navigate('/projects')
         notification.success({

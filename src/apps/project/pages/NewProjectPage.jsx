@@ -3,9 +3,8 @@ import React, { useState } from 'react';
 import { useAsync } from 'react-use';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { userStore, projectStore, newProjectStore } from 'store';
+import { userStore, newProjectStore } from 'store';
 import {
-  fetchProjectCategories,
   fetchMyNewProject,
 } from '../api';
 import { FormSteps } from '../components';
@@ -19,10 +18,6 @@ const NewProjectPage = () => {
   useAsync(async () => {
     setIsLoading(true);
     try {
-      if (!projectStore.projectCategories) {
-        const projectCategories = await fetchProjectCategories();
-        projectStore.setProjectCategories(projectCategories);
-      }
       if (!newProjectStore.project) {
         const myNewProject = await fetchMyNewProject(userStore.id);
         newProjectStore.setProject(myNewProject);

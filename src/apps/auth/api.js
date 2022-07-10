@@ -13,10 +13,9 @@ export const signin = async (credentials) => {
 };
 
 export const signup = async (credentials) => {
-  const response = await client.post(usersUrl, credentials);
-  return _.get(response, 'data');
+  return await client.post(usersUrl, credentials);
 };
 
 export const activateAccount = async (uid, token) => {
-  await client.post(activateAccountUrl, { uid, token });
+  return await client.post(activateAccountUrl, { uid, token });
 };

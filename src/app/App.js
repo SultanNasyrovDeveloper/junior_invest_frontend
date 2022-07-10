@@ -18,7 +18,7 @@ import {
 import {
   ProjectListPage,
   NewProjectPage,
-  FilesFormPage,
+  ProjectsPage,
   GeneralInfoFormPage,
   ImagesFormPage,
   PresentationFormPage,
@@ -63,16 +63,20 @@ function App() {
           <Route path="/password/reset" element={<ResetPasswordPage />} />
           <Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordConfirmPage />} />
 
-          <Route path="/projects" element={<ProjectListPage />} />
+          <Route element={<ProjectsPage />} >
+            <Route path="/projects" element={<ProjectListPage />} />
+          </Route>
 
           {/* protected routes */}
           <Route element={<RequiresAuth />}>
             <Route path="/profile" element={<UserProfilePage />} />
-            <Route element={<NewProjectPage />}>
-              <Route path="/projects/new/general" element={<GeneralInfoFormPage />} />
-              <Route path="/projects/new/presentation" element={<PresentationFormPage />} />
-              <Route path="/projects/new/video" element={<VideoFormPage />} />
-              <Route path="/projects/new/images" element={<ImagesFormPage />} />
+            <Route element={<ProjectsPage />}>
+              <Route element={<NewProjectPage />}>
+                <Route path="/projects/new/general" element={<GeneralInfoFormPage />} />
+                <Route path="/projects/new/presentation" element={<PresentationFormPage />} />
+                <Route path="/projects/new/video" element={<VideoFormPage />} />
+                <Route path="/projects/new/images" element={<ImagesFormPage />} />
+              </Route>
             </Route>
           </Route>
 

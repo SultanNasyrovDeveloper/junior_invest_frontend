@@ -23,6 +23,7 @@ const YoutubeVideoForm = (props) => {
       onSubmit={onSubmit}
       enableValidation={true}
       validationSchema={youtubeVideoValidationSchema}
+      validateOnMount={true}
     >
       {(form) => (
         <Form

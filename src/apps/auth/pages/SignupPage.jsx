@@ -17,7 +17,7 @@ const SingupPage = () => {
       navigate('/registration/success');
     }
     catch(error) {
-      if (error.response.status === 400) {
+      if (error.response?.status === 400) {
         const serverErrors = error.response.data;
         const formErrors = [];
         _.forIn(serverErrors, (fieldErrorMessages, fieldName) => {
@@ -25,6 +25,7 @@ const SingupPage = () => {
         });
         formRef.current.setFields(formErrors);
       }
+      console.log(error);
     }
   },[]);
 

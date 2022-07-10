@@ -7,8 +7,11 @@ import { projectStore, newProjectStore } from 'store';
 import { updateProject, createProject} from '../api';
 
 import { GeneralInfoForm } from '../components';
+import { useTitle } from "react-use";
 
 const GeneralInfoFormPage = () => {
+
+  useTitle('Форма создания проекта - общая информация');
 
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();

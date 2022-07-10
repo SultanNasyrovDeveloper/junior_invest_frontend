@@ -9,7 +9,7 @@ import {
 } from 'api/urls';
 import { client } from 'api';
 
-export const fetchProjectCategories = async (dispatch) => {
+export const fetchProjectCategories = async () => {
   try {
     const response = await client.get(
       projectCategoriesUrl,
@@ -22,10 +22,23 @@ export const fetchProjectCategories = async (dispatch) => {
   }
 };
 
+export const fetchProjects = async (queryParams) => {
+  try {
+    const response = await client.get(projectsUrl, { params: queryParams });
+    return [
+      _.get(response, 'data.results'),
+      _.get(response, 'data.count')
+    ];
+  }
+  catch(error) {
+    throw error;
+  }
+};
+
 export const fetchMyNewProject = async (userId) => {
   try {
     const queryParams = {
-      filled: false,
+      status: 'created',
       author: userId,
       limit: 1
     }

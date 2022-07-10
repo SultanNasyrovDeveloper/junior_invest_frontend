@@ -40,7 +40,7 @@ const VideoFormPage = () => {
 
   const handleNext = useCallback(() => {
     navigate('/projects/new/images');
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     newProjectStore.setCurrentStep(2);
