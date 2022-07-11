@@ -1,31 +1,43 @@
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Empty } from 'antd';
 import React from 'react';
+
+import { VerticalMarginRow } from './components.styled';
+import ProjectCard from './ProjectCard';
+
 
 const ProjectsList = (props) => {
 
-  const { projects } = props;
+  const { projects, onClick } = props;
 
-  console.log(projects);
   return (
-    <Row gutter={[5, 5]}>
+    <VerticalMarginRow gutter={[8, 8]}>
       {
         projects?.map(project => (
-          <Col key={project.id} span={8}>
-            <Card
-              cover={
-              <img
-                src={project.images[0]?.thumbnail}
-              />
-            }
-            >
-              <Card.Meta
-                title={project.name}
-              />
-            </Card>
+          <Col
+            key={project.id}
+            xs={24}
+            md={12}
+            lg={8}
+            xl={6}
+          >
+            <ProjectCard
+              project={project}
+              onClick={onClick}
+            />
           </Col>
         ))
       }
-    </Row>
+      {
+        (!projects || projects?.length === 0) &&
+        <Row
+          justify="center"
+          align="middle"
+          style={{width: '100%', minHeight: '30vh'}}
+        >
+          <Empty description="Список проектов пуст" />
+        </Row>
+      }
+    </VerticalMarginRow>
   );
 };
 

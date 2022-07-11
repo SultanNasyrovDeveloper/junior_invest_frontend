@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 class ProjectStore {
   projectCategories = null;
-  projectList = [];
+  projectsList = [];
   projectDetail = null;
 
   constructor() {

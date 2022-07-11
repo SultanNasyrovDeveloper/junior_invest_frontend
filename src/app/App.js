@@ -22,7 +22,7 @@ import {
   GeneralInfoFormPage,
   ImagesFormPage,
   PresentationFormPage,
-  ProjectPage,
+  ProjectDetailPage,
   VideoFormPage
 } from 'apps/project';
 import { appStore } from 'store';
@@ -65,6 +65,7 @@ function App() {
 
           <Route element={<ProjectsPage />} >
             <Route path="/projects" element={<ProjectListPage />} />
+            <Route path="/projects/:id" element={<ProjectDetailPage />} />
           </Route>
 
           {/* protected routes */}

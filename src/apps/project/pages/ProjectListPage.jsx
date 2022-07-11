@@ -2,32 +2,38 @@ import {
   PageHeader,
   Button,
   Row,
-  Col,
   Select,
-  Pagination
+  Pagination,
+  Space,
 } from 'antd';
 import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTitle, useAsync } from 'react-use';
 
 import { projectStore } from 'store';
 import { fetchProjects } from '../api';
-import { ProjectsList } from '../components';
+import {
+  ProjectsList,
+  CategoryFilterSelectMenu,
+  VerticalMarginRow
+} from '../components';
 import { orderingOptions, pageSizeOptions } from '../constants';
 
 const ObservingProjectsList = observer(ProjectsList);
-
+const ObservingCategorySelectFilter = observer(CategoryFilterSelectMenu);
 
 const ProjectListPage = () => {
 
   useTitle('Список проектов');
+  const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [projectsCount, setProjectsCount] = useState(0);
   const [ordering, setOrdering] = useState('created');
+  const [chosenCategories, setChosenCategories] = useState(new Set());
 
   const orderingSelectOptions = useMemo(() => {
     const options = []
@@ -38,11 +44,29 @@ const ProjectListPage = () => {
   }, []);
 
   const queryParams = useMemo(() => {
-    return {
-      limit: pageSize,
-      offset: pageSize * (page - 1)
-    };
-  }, [page, pageSize, ordering]);
+    const queryParams = new URLSearchParams();
+    queryParams.append('order', ordering);
+    queryParams.append('limit', pageSize);
+    queryParams.append('offset', pageSize * (page - 1))
+    chosenCategories.forEach(categoryId => {
+      queryParams.append('category', categoryId);
+    });
+    return queryParams;
+  }, [page, pageSize, ordering, chosenCategories]);
+
+  const handleCategoryFilterChange = useCallback((event, categoryId) => {
+    event.target.checked
+      ? setChosenCategories(prev => {
+        const newChosenCategories = new Set(prev);
+        newChosenCategories.add(categoryId);
+        return newChosenCategories;
+      })
+      : setChosenCategories(prev => {
+        const newChosenCategories = new Set(prev);
+        newChosenCategories.delete(categoryId);
+        return newChosenCategories;
+      });
+  }, []);
 
   useAsync(async () => {
     try {
@@ -58,46 +82,52 @@ const ProjectListPage = () => {
   return (
     <>
       <PageHeader
-        title="Projects list"
+        title="Список проектов"
         ghost={false}
         extra={
           <Link to="/projects/new/general">
-            <Button type="primary">Create</Button>
+            <Button type="primary">Создать</Button>
           </Link>
         }
       >
-        Here you can see list of available projects created by young talented students
+        Здесь вы можете увидеть список проектов, созданных талантливыми учениками со всего Татарстана.
       </PageHeader>
 
       <div>
-        <Row>
-          <Col span={6}>Категории</Col>
-          <Col span={18}>
-            <Row justify="space-between" >
-              <Select
-                value={pageSize}
-                options={pageSizeOptions}
-                onChange={setPageSize}
-              />
-              <Select
-                value={ordering}
-                options={orderingSelectOptions}
-                onChange={setOrdering}
-              />
-            </Row>
-
-            <ObservingProjectsList
-              projects={projectStore.projectsList}
+        <VerticalMarginRow justify="space-between">
+          <Select
+            value={pageSize}
+            options={pageSizeOptions}
+            onChange={setPageSize}
+          />
+          <Space>
+            <ObservingCategorySelectFilter
+              categories={projectStore.projectCategories}
+              checked={chosenCategories}
+              onChange={handleCategoryFilterChange}
             />
+            <Select
+              style={{minWidth: 250}}
+              value={ordering}
+              options={orderingSelectOptions}
+              onChange={setOrdering}
+            />
+          </Space>
+        </VerticalMarginRow>
 
-            <Row justify="center">
-              <Pagination
-                defaultCurrent={page}
-                total={Math.floor(projectsCount / pageSize)}
-              />
-            </Row>
-          </Col>
-        </Row>
+        <ObservingProjectsList
+          projects={projectStore.projectsList}
+          onClick={(project) => navigate(`/projects/${project.id}`)}
+        />
+
+        <VerticalMarginRow justify="center">
+          <Pagination
+            current={page}
+            pageSize={pageSize}
+            total={projectsCount}
+            onChange={setPage}
+          />
+        </VerticalMarginRow>
       </div>
     </>
   );
