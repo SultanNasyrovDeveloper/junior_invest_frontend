@@ -53,7 +53,7 @@ const UserMenu = () => {
             <StyledUserMenuCard>
               <List>
                 <ListItemStyled>
-                  { userStore.email }
+                  { userStore.fullName }
                 </ListItemStyled>
                 <ListItemStyled
                   key="profile"
@@ -61,25 +61,7 @@ const UserMenu = () => {
                 >
                   <Space size="middle">
                     <ProfileOutlined />
-                    Profile
-                  </Space>
-                </ListItemStyled>
-                <ListItemStyled
-                  key="messages"
-                  onClick={() => navigate('/profile')}
-                >
-                  <Space size="middle">
-                    <MessageOutlined />
-                    Messages
-                  </Space>
-                </ListItemStyled>
-                <ListItemStyled
-                  key="coins"
-                  onClick={() => navigate('/profile')}
-                >
-                  <Space size="middle">
-                    <PayCircleOutlined />
-                    Coins
+                    Профиль
                   </Space>
                 </ListItemStyled>
                 <ListItemStyled
@@ -88,7 +70,7 @@ const UserMenu = () => {
                 >
                   <Space size="middle">
                     <LogoutOutlined />
-                    Logout
+                    Выйти
                   </Space>
                 </ListItemStyled>
               </List>

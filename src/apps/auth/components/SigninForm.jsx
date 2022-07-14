@@ -1,9 +1,16 @@
-import { Button, Form, Input, Icon } from 'antd';
+import { Form, Input, Row, Space } from 'antd';
+import {
+  UserOutlined,
+  LockOutlined
+} from '@ant-design/icons';
 import React, { useCallback } from 'react';
+
+import { VerticalMarginRow } from 'components';
+import { LoginSubmitButton } from '../components';
 
 const SigninForm = (props) => {
 
-  const { onSubmit } = props;
+  const { formRef, onSignupClick, onSubmit } = props;
 
   const onFinish = useCallback((data) => {
     onSubmit(data);
@@ -11,38 +18,67 @@ const SigninForm = (props) => {
 
   return (
     <Form
-      name="basic"
+      name="signin-form"
+      ref={formRef}
       initialValues={{ remember: true }}
       layout="vertical"
       onFinish={onFinish}
+      validateTrigger="onBlur"
       autoComplete="off"
     >
       <Form.Item
-        label="Email"
+        label="Электронная почта"
         name="email"
         rules={[
           {
             required: true,
             type: 'email',
-            message: 'Should be valid email address'
+            message: 'Введите валидный адрес почты'
           }]}
       >
-        <Input />
+        <Input
+          size="large"
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="ivan_ivanov@mail.ru"
+        />
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label="Пароль"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{
+          required: true,
+          message: 'Введите пароль'
+        }]}
       >
-        <Input.Password/>
+        <Input.Password
+          size="large"
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          placeholder="Пароль"
+        />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
+        <VerticalMarginRow>
+          <LoginSubmitButton
+            size="large"
+            type="primary"
+            htmlType="submit"
+          >
+            Войти
+          </LoginSubmitButton>
+        </VerticalMarginRow>
       </Form.Item>
+
+      <Row justify="center">
+        <Space>
+          <span>
+            Нет аккаунта?
+          </span>
+          <a onClick={onSignupClick}>Зарегистрироваться</a>
+        </Space>
+
+      </Row>
     </Form>
   );
 };

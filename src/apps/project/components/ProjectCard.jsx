@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Row, Space } from "antd";
 import { HeartOutlined }  from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 
 const ProjectCard = (props) => {
 
@@ -14,6 +13,7 @@ const ProjectCard = (props) => {
       cover={
         <img
           src={project.images[0]?.thumbnail}
+          alt={project.images[0]?.name}
         />
       }
     >
@@ -21,7 +21,7 @@ const ProjectCard = (props) => {
         { project.name }
       </Row>
       <Row justify="space-between">
-        {`${project.author.last_name} ${project.author.first_name}`}
+        {`${project.author?.last_name} ${project.author?.first_name}`}
 
         <Space>
           <HeartOutlined />

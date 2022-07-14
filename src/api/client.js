@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { AuthService } from 'apps/auth';
 
-import { tokenRefreshUrl } from './urls';
+import { tokenObtainUrl, tokenRefreshUrl } from './urls';
 
 const client = axios.create({
   baseURL: 'http://localhost:8000/api/v1/',
@@ -33,8 +33,9 @@ client.interceptors.response.use(
     return response
   },
   async function (error) {
-
+    debugger;
     const originalConfig = error.config;
+
     if (error.code === 'ERR_NETWORK') {
       message.error('Не получается подключится к серверу. Проверьте свое интернет соединение или обратитесь к администратору сервера')
     }
@@ -44,17 +45,21 @@ client.interceptors.response.use(
       window.location.replace('/signin');
     }
 
-    if (originalConfig.retry) {
-      logout();
-    }
-
     if (error.response?.status === 401) {
+
+      if (originalConfig.url === tokenObtainUrl) {
+        return Promise.reject(error);
+      }
+
       if (!AuthService.accessToken) {
-        logout();
+        return logout();
+      }
+
+      if (originalConfig.retry) {
+        return logout();
       }
 
       try {
-
         originalConfig.retry = true;
         const response = await client.post(
           tokenRefreshUrl, { refresh: AuthService.refreshToken }

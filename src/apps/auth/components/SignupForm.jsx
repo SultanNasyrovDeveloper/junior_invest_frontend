@@ -11,6 +11,8 @@ const SignupForm = (props) => {
       layout="vertical"
       onFinish={onSubmit}
     >
+
+
       <Form.Item
         label="Фамилия"
         name="last_name"

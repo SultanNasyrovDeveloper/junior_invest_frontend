@@ -1,8 +1,8 @@
 import { Button, Row, Space } from 'antd';
+import { Formik } from 'formik';
+import { Form, Select, Input } from 'formik-antd';
 import _ from 'lodash';
 import React from 'react';
-import { Formik } from 'formik';
-import { Form, Select, Input } from 'formik-antd'
 
 import { generalInfoValidationSchema } from './validation';
 
@@ -25,13 +25,11 @@ const GeneralInfoForm = (props) => {
     >
       {({ touched, isValid, values }) => (
 
-
         <Form layout="vertical">
           <Form.Item label="Категория" name="category">
             <Select name="category" options={categoryOptions}/>
           </Form.Item>
-          {console.log(isValid)}
-          {console.log(values)}
+
           <Form.Item label="Название" name="name">
             <Input name="name" showCount={true} />
           </Form.Item>
@@ -39,6 +37,7 @@ const GeneralInfoForm = (props) => {
           <Form.Item label="Описание" name="description">
             <Input.TextArea name="description" rows={4} showCount={true} />
           </Form.Item>
+
           <Row justify="end">
             <Space>
               <Button
@@ -53,7 +52,6 @@ const GeneralInfoForm = (props) => {
               >Сохранить и продолжить</Button>
             </Space>
           </Row>
-
         </Form>
       )}
     </Formik>

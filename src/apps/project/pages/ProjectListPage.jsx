@@ -1,7 +1,6 @@
 import {
   PageHeader,
   Button,
-  Row,
   Select,
   Pagination,
   Space,
@@ -12,12 +11,12 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTitle, useAsync } from 'react-use';
 
+import { VerticalMarginRow } from 'components';
 import { projectStore } from 'store';
 import { fetchProjects } from '../api';
 import {
   ProjectsList,
   CategoryFilterSelectMenu,
-  VerticalMarginRow
 } from '../components';
 import { orderingOptions, pageSizeOptions } from '../constants';
 

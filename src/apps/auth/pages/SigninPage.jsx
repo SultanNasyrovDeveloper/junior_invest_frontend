@@ -1,13 +1,11 @@
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, notification } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useMemo, useEffect } from 'react';
+import React, { useCallback, useMemo, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTitle } from 'react-use';
 
-import { userStore } from '../../../store';
-import { fetchMe } from '../../user/api';
+import { userStore } from 'store';
 
-import { signin } from '../api';
 import { SigninForm } from '../components';
 import { useAuth } from '../hooks';
 import AuthService from '../service';
@@ -17,22 +15,33 @@ const SigninPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const formRef = useRef(null);
 
   const targetLocation = useMemo(() => {
     return location.state?.from?.pathname || '/profile';
   }, [location]);
 
+  const handelSignupClick = useCallback(() => {
+    navigate('/signup');
+  }, [navigate])
+
   const handleFormSubmit = useCallback(async (credentials) => {
+    debugger;
     try {
-      const tokens = await signin(credentials);
+      const tokens = await userStore.signin(credentials);
       AuthService.login(tokens);
       setIsLoggedIn(true);
-      const user = await fetchMe();
-      userStore.setUser(user);
+      await userStore.fetchMe();
+      navigate(targetLocation);
     } catch(error) {
-      console.log(error);
+      notification.error({
+        message: 'Не удалось войти в систему',
+        description: 'Пользователь с таким именем и паролем не найден попробуйте еще раз.'
+      });
+      AuthService.logout();
+      setIsLoggedIn(false);
+      formRef.current.resetFields()
     }
-    navigate(targetLocation);
   }, [setIsLoggedIn, targetLocation]);
 
   useEffect(() => {
@@ -45,7 +54,11 @@ const SigninPage = () => {
     <Row justify="center">
       <Col span={8}>
         <Card title="Авторизация">
-          <SigninForm onSubmit={handleFormSubmit}/>
+          <SigninForm
+            formRef={formRef}
+            onSignupClick={handelSignupClick}
+            onSubmit={handleFormSubmit}
+          />
         </Card>
       </Col>
     </Row>

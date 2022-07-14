@@ -1,7 +1,7 @@
-import { Row, Col, Card, Empty } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import React from 'react';
 
-import { VerticalMarginRow } from './components.styled';
+import { VerticalMarginRow } from 'components';
 import ProjectCard from './ProjectCard';
 
 
