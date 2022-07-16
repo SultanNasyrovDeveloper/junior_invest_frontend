@@ -33,7 +33,6 @@ client.interceptors.response.use(
     return response
   },
   async function (error) {
-    debugger;
     const originalConfig = error.config;
 
     if (error.code === 'ERR_NETWORK') {
@@ -46,9 +45,13 @@ client.interceptors.response.use(
     }
 
     if (error.response?.status === 401) {
-
+      debugger;
       if (originalConfig.url === tokenObtainUrl) {
         return Promise.reject(error);
+      }
+
+      if (originalConfig.url === tokenObtainUrl) {
+        return logout();
       }
 
       if (!AuthService.accessToken) {
@@ -59,18 +62,14 @@ client.interceptors.response.use(
         return logout();
       }
 
-      try {
-        originalConfig.retry = true;
-        const response = await client.post(
-          tokenRefreshUrl, { refresh: AuthService.refreshToken }
-        );
-        const newAccessToken = response.data.access;
-        AuthService.accessToken = newAccessToken;
-        originalConfig.Authorization = `JWT ${newAccessToken}`;
-        return client.request(originalConfig);
-      } catch(error) {
-        return logout();
-      }
+      originalConfig.retry = true;
+      const response = await client.post(
+        tokenRefreshUrl, { refresh: AuthService.refreshToken }
+      );
+      const newAccessToken = response.data.access;
+      AuthService.accessToken = newAccessToken;
+      originalConfig.Authorization = `JWT ${newAccessToken}`;
+      return client.request(originalConfig);
     }
 
     return Promise.reject(error);

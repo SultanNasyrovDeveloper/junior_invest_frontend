@@ -1,21 +1,18 @@
 import { Row, Col } from 'antd';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const HeaderLayout = (props) => {
-  const navigate = useNavigate();
-  const { burgerIcon, userMenu } = props;
+  const { burgerIcon, logo,  userMenu } = props;
 
   return (
     <Row>
       <Col span={1}>
         { burgerIcon }
       </Col>
-      <Col span={5}>
-        <span
-          onClick={() => navigate('/')}
-          style={{cursor: 'pointer'}}
-        >Junior Invest</span>
+      <Col span={5}
+           style={{display: 'flex', alignItems: 'center'}}
+      >
+        { logo }
       </Col>
       <Col span={12}>
 

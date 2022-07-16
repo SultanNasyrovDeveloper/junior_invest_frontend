@@ -2,7 +2,9 @@ import { MenuOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import { ReactComponent as Logo } from 'assets/icons/logo_text.svg';
 import HomePage from 'apps/home';
 import UserProfilePage from 'apps/user';
 import {
@@ -42,6 +44,14 @@ function App() {
       header={
         <HeaderLayout
           burgerIcon={<MenuOutlined onClick={() => appStore.toggleSidebar()}/>}
+          logo={
+            <Link to="/" style={{display: 'flex'}}>
+              <Logo
+                style={{ maxHeight: '2.5rem', width: 'auto' }}
+              />
+            </Link>
+
+          }
           userMenu={<UserMenu/>}
         />
       }

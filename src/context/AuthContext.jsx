@@ -3,23 +3,24 @@ import { useAsync } from 'react-use';
 import React, { createContext, useState } from 'react';
 
 import { userStore } from 'store';
+import { useLogout } from 'apps/auth';
 import AuthService from 'apps/auth/service';
 import { fetchMe } from 'apps/user/api';
 
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
+  const logout = useLogout();
+
   const [isLoggedIn, setIsLoggedIn] = useState(() => AuthService.isLoggedIn);
 
   useAsync(async () => {
     if (isLoggedIn) {
-      const user = await fetchMe();
-      userStore.setUser(user);
       try {
         const user = await fetchMe();
         userStore.setUser(user);
       } catch(error) {
-
+        logout();
       }
     }
   }, []);
