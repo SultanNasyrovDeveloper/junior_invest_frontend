@@ -1,4 +1,4 @@
-import { Row, Col } from 'antd';
+import { Row, Col, Space } from 'antd';
 import React from 'react';
 
 const HeaderLayout = (props) => {
@@ -6,19 +6,14 @@ const HeaderLayout = (props) => {
 
   return (
     <Row>
-      <Col span={1}>
-        { burgerIcon }
-      </Col>
-      <Col span={5}
-           style={{display: 'flex', alignItems: 'center'}}
-      >
-        { logo }
-      </Col>
-      <Col span={12}>
-
+      <Col xs={18}>
+        <Space size="large">
+          { burgerIcon }
+          { logo }
+        </Space>
       </Col>
       <Col
-        span={6}
+        xs={6}
         style={{display: 'flex', justifyContent: 'end', alignItems: 'center'}}
       >
         { userMenu }

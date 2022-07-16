@@ -2,10 +2,7 @@ import {
   HomeOutlined,
   ProjectOutlined,
   InfoCircleOutlined,
-  MessageOutlined,
   ProfileOutlined,
-  BookOutlined,
-  GiftOutlined,
   FileDoneOutlined
 } from '@ant-design/icons';
 import { useMemo } from 'react';
@@ -19,63 +16,36 @@ const useSidebarMenuItems = () => {
         key: '/',
         icon: <HomeOutlined />,
         label: (
-          <span>Home</span>
-        )
-      },
-      {
-        key: '/projects',
-        icon: <ProjectOutlined />,
-        label: (
-          <span>Projects</span>
+          <span>Главная</span>
         )
       },
       {
         key: '/profile',
         icon: <ProfileOutlined />,
         label: (
-          <span>Profile</span>
+          <span>Профиль</span>
         )
       },
       {
-        key: '/messages',
-        icon: <MessageOutlined />,
+        key: '/projects',
+        icon: <ProjectOutlined />,
         label: (
-          <span>Messages</span>
+          <span>Проекты</span>
         )
       },
-      {
-        key: '/blog',
-        icon: <MessageOutlined />,
-        label: (
-          <span>Blog</span>
-        )
-      },
-      {
-        key: '/courses',
-        icon: <BookOutlined />,
-        label: (
-          <span>Courses</span>
-        )
-      },
-      {
-        key: '/gift-shop',
-        icon: <GiftOutlined />,
-        label: (
-          <span>Gift Shop</span>
-        )
-      },
+
       {
         key: '/terms-of-use',
         icon: <FileDoneOutlined />,
         label: (
-          <span>Terms of Use</span>
+          <span>Правила</span>
         )
       },
       {
         key: '/about',
         icon: <InfoCircleOutlined />,
         label: (
-          <span>About us</span>
+          <span>О нас</span>
         )
       },
     ]

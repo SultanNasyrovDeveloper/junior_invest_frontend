@@ -1,4 +1,5 @@
 import { Form, Input } from 'antd';
+import _ from 'lodash';
 import React from 'react';
 import { SubmitButton } from '../components';
 import {
@@ -21,6 +22,7 @@ const SignupForm = (props) => {
       <Form.Item
         label="Фамилия"
         name="last_name"
+        normalize={(value) => _.startCase(value)}
         rules={[{ required: true, message: 'Введите фамилию' }]}
       >
         <Input
@@ -32,6 +34,7 @@ const SignupForm = (props) => {
       <Form.Item
         label="Имя"
         name="first_name"
+        normalize={(value) => _.startCase(value)}
         rules={[{ required: true, message: 'Введите имя' }]}
       >
         <Input

@@ -20,6 +20,7 @@ const SidebarMenu = () => {
   return (
     <>
       <Menu
+        style={{ marginTop: '1rem' }}
         mode="vertical"
         items={items}
         onClick={handleMenuItemClick}

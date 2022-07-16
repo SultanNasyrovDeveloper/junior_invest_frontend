@@ -93,40 +93,46 @@ const ProjectListPage = () => {
       </PageHeader>
 
       <div>
-        <VerticalMarginRow justify="space-between">
-          <Select
-            value={pageSize}
-            options={pageSizeOptions}
-            onChange={setPageSize}
-          />
-          <Space>
-            <ObservingCategorySelectFilter
-              categories={projectStore.projectCategories}
-              checked={chosenCategories}
-              onChange={handleCategoryFilterChange}
-            />
+        {
+          !_.isEmpty(projectStore.projectsList) &&
+          <VerticalMarginRow justify="space-between">
             <Select
-              style={{minWidth: 250}}
-              value={ordering}
-              options={orderingSelectOptions}
-              onChange={setOrdering}
+              value={pageSize}
+              options={pageSizeOptions}
+              onChange={setPageSize}
             />
-          </Space>
-        </VerticalMarginRow>
+            <Space>
+              <ObservingCategorySelectFilter
+                categories={projectStore.projectCategories}
+                checked={chosenCategories}
+                onChange={handleCategoryFilterChange}
+              />
+              <Select
+                style={{minWidth: 250}}
+                value={ordering}
+                options={orderingSelectOptions}
+                onChange={setOrdering}
+              />
+            </Space>
+          </VerticalMarginRow>
+        }
 
         <ObservingProjectsList
           projects={projectStore.projectsList}
           onClick={(project) => navigate(`/projects/${project.id}`)}
         />
 
-        <VerticalMarginRow justify="center">
-          <Pagination
-            current={page}
-            pageSize={pageSize}
-            total={projectsCount}
-            onChange={setPage}
-          />
-        </VerticalMarginRow>
+        {
+          !_.isEmpty(projectStore.projectsList) &&
+          <VerticalMarginRow justify="center">
+            <Pagination
+              current={page}
+              pageSize={pageSize}
+              total={projectsCount}
+              onChange={setPage}
+            />
+          </VerticalMarginRow>
+        }
       </div>
     </>
   );
