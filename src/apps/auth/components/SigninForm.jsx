@@ -1,12 +1,11 @@
 import { Form, Input, Row, Space } from 'antd';
 import {
-  UserOutlined,
+  MailOutlined,
   LockOutlined
 } from '@ant-design/icons';
 import React, { useCallback } from 'react';
 
-import { VerticalMarginRow } from 'components';
-import { LoginSubmitButton } from '../components';
+import { SubmitButton } from '../components';
 
 const SigninForm = (props) => {
 
@@ -38,7 +37,7 @@ const SigninForm = (props) => {
       >
         <Input
           size="large"
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          prefix={<MailOutlined className="site-form-item-icon" />}
           placeholder="ivan_ivanov@mail.ru"
         />
       </Form.Item>
@@ -59,15 +58,13 @@ const SigninForm = (props) => {
       </Form.Item>
 
       <Form.Item>
-        <VerticalMarginRow>
-          <LoginSubmitButton
-            size="large"
-            type="primary"
-            htmlType="submit"
-          >
-            Войти
-          </LoginSubmitButton>
-        </VerticalMarginRow>
+        <SubmitButton
+          size="large"
+          type="primary"
+          htmlType="submit"
+        >
+          Войти
+        </SubmitButton>
       </Form.Item>
 
       <Row justify="center">

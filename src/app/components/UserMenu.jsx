@@ -83,10 +83,10 @@ const UserMenu = () => {
       { !isLoggedIn &&
         <>
           <Link to="/signup">
-            <Button type="link">Sign up</Button>
+            <Button type="link">Регистрация</Button>
           </Link>
           <Link to="/signin">
-            <Button type="link">Sign in</Button>
+            <Button type="link">Войти</Button>
           </Link>
         </>
       }

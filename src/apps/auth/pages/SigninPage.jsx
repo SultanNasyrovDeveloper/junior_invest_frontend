@@ -52,7 +52,7 @@ const SigninPage = () => {
 
   return (
     <Row justify="center">
-      <Col span={8}>
+      <Col  xs={24} sm={20} md={12} lg={8}>
         <Card title="Авторизация">
           <SigninForm
             formRef={formRef}

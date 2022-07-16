@@ -1,5 +1,11 @@
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
+import { SubmitButton } from '../components';
+import {
+  MailOutlined,
+  LockOutlined,
+  UserOutlined
+} from "@ant-design/icons";
 
 const SignupForm = (props) => {
 
@@ -12,44 +18,71 @@ const SignupForm = (props) => {
       onFinish={onSubmit}
     >
 
-
       <Form.Item
         label="Фамилия"
         name="last_name"
-        rules={[{ required: true, message: 'Пожалуйста введите фамилию' }]}
+        rules={[{ required: true, message: 'Введите фамилию' }]}
       >
-        <Input placeholder="input placeholder" />
+        <Input
+          size="large"
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Иванов"
+        />
       </Form.Item>
       <Form.Item
         label="Имя"
         name="first_name"
-        rules={[{ required: true, message: 'Пожалуйста введите фамилию' }]}
+        rules={[{ required: true, message: 'Введите имя' }]}
       >
-        <Input placeholder="input placeholder" />
+        <Input
+          size="large"
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Иван"
+        />
       </Form.Item>
       <Form.Item
         label="Эллектронаня почта"
         name="email"
-        rules={[{ required: true, message: 'Пожалуйста введите фамилию' }]}
+        rules={[{
+          required: true,
+          type: 'email',
+          message: 'Введите валидный адрес электронной почты'
+        }]}
       >
-        <Input placeholder="input placeholder" />
+        <Input
+          size="large"
+          prefix={<MailOutlined className="site-form-item-icon" />}
+          placeholder="ivanov_ivan@mail.ru"
+        />
       </Form.Item>
       <Form.Item
         label="Пароль"
         name="password"
-        rules={[{ required: true, message: 'Пожалуйста введите фамилию' }]}
+        rules={[{ required: true, message: 'Введите пароль' }]}
       >
-        <Input.Password placeholder="password" />
+        <Input.Password
+          size="large"
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          placeholder="Пароль"
+        />
       </Form.Item>
       <Form.Item
         label="Подтверждение пароля"
         name="re_password"
-        rules={[{ required: true, message: 'Пожалуйста введите фамилию' }]}
+        rules={[{ required: true, message: 'Посторите пароль' }]}
       >
-        <Input.Password placeholder="input placeholder" />
+        <Input.Password
+          size="large"
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          placeholder="Пароль"
+        />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">Submit</Button>
+        <SubmitButton
+          size="large"
+          type="primary"
+          htmlType="submit"
+        >Зарегистрироваться</SubmitButton>
       </Form.Item>
     </Form>
   );
