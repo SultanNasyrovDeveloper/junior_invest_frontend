@@ -1,10 +1,18 @@
+import { Row, Col, Form, Input, Upload } from 'antd';
 import React from 'react';
 
 const PersonalInfoForm = () => {
   return (
-    <div>
-      Личная информация
-    </div>
+    <Form>
+      <Row>
+        <Col>
+
+        </Col>
+        <Col>
+
+        </Col>
+      </Row>
+    </Form>
   );
 };
 

@@ -44,7 +44,6 @@ const UserProfilePage = () => {
         </Col>
       </VerticalMarginRow>
 
-
     </>
   );
 };

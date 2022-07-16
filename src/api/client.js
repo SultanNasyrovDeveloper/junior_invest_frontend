@@ -45,7 +45,6 @@ client.interceptors.response.use(
     }
 
     if (error.response?.status === 401) {
-      debugger;
       if (originalConfig.url === tokenObtainUrl) {
         return Promise.reject(error);
       }
