@@ -1,5 +1,6 @@
-import { PageHeader, Col, Card } from 'antd';
-import React, { useState } from 'react';
+import { PageHeader, Col, Card, notification } from 'antd';
+import _ from 'lodash';
+import React, { useState, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useTitle } from 'react-use';
 
@@ -11,12 +12,34 @@ const ObservingPersonalInfoForm = observer(PersonalInfoForm);
 
 const tabs = [
   { key: 'personal', tab: 'Личная информация' },
-  { key: 'projects', tab: 'Мои проекты' },
+  { key: 'projects', tab: 'Проекты' },
 ];
 
 const UserProfilePage = () => {
   useTitle('Профиль пользователя');
   const [activeTab, setActiveTab] = useState('personal');
+
+  const handleFormSubmit = useCallback(async (validatedData) => {
+    const hasChanged = (
+      validatedData.last_name !== userStore.user?.last_name
+      || validatedData.first_name !== userStore.user?.first_name
+    );
+
+    const cleanValidatedData = _.omit(validatedData, 'email');
+    if (hasChanged) {
+      try {
+        await userStore.updateUser(userStore.user.id, cleanValidatedData);
+        notification.success({
+          message: 'Данные успешно обновлены'
+        });
+      }
+      catch(error) {
+        notification.error({
+          message: 'Не удалось обновить данные пользователя'
+        });
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -33,7 +56,10 @@ const UserProfilePage = () => {
           >
             {
               activeTab === 'personal' &&
-              <ObservingPersonalInfoForm />
+              <ObservingPersonalInfoForm
+                initialValues={userStore.user}
+                onSubmit={handleFormSubmit}
+              />
             }
             {
               activeTab === 'projects' &&

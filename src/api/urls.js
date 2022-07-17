@@ -7,7 +7,7 @@ export const activateAccountUrl = 'auth/users/activation/';
 export const usersUrl = 'auth/users/';
 export const myUserUrl = 'auth/users/me/';
 export const fetchMeUrl = 'auth/users/me/';
-
+export const userDetailUrl = (userId) => `auth/users/${userId}/`;
 
 export const projectCategoriesUrl = 'project/categories/';
 

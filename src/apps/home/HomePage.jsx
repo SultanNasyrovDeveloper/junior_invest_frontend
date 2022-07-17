@@ -18,8 +18,6 @@ const HomePage = () => {
     await projectStore.fetchProjects(queryParams);
   }, []);
 
-
-
   return (
     <>
       <Banner

@@ -5,10 +5,10 @@ import { client } from 'api';
 import {
   fetchMeUrl,
   tokenObtainUrl,
+  userDetailUrl,
   usersUrl,
   activateAccountUrl,
 } from 'api/urls';
-import {activateAccount} from "../apps/auth/api";
 
 class UserStore {
   user = null;
@@ -45,6 +45,15 @@ class UserStore {
 
   async signup(newUserData) {
     await client.post(usersUrl, newUserData);
+  }
+
+  async updateUser(userId, newUserData) {
+    const response = await client.patch(fetchMeUrl, newUserData);
+     runInAction(() => {
+       if (userId === this.user.id) {
+         this.user = _.merge(this.user, response.data);
+       }
+     });
   }
 
   async activateAccount(uid, token) {
