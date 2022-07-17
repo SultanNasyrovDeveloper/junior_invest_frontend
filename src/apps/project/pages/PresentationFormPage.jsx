@@ -57,7 +57,7 @@ const PresentationFormPage = () => {
       )
       newProjectStore.updateProject(updatedProject);
       setHasChanged(false);
-      navigate('/projects/new/video')
+      navigate('/projects/new/media')
     }
     catch(error) {
       console.log(error);
@@ -116,7 +116,7 @@ const PresentationFormPage = () => {
             <Link to="/projects/new/general">
               <Button>Предыдущий шаг</Button>
             </Link>
-            <Link to="/projects/new/video">
+            <Link to="/projects/new/media">
               <Button
                 disabled={_.isEmpty(files)}
               >Пропустить</Button>

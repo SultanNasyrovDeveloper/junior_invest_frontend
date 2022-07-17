@@ -25,7 +25,7 @@ import {
   ImagesFormPage,
   PresentationFormPage,
   ProjectDetailPage,
-  VideoFormPage
+  MediaFormPage
 } from 'apps/project';
 import { appStore } from 'store';
 
@@ -85,7 +85,7 @@ function App() {
               <Route element={<NewProjectPage />}>
                 <Route path="/projects/new/general" element={<GeneralInfoFormPage />} />
                 <Route path="/projects/new/presentation" element={<PresentationFormPage />} />
-                <Route path="/projects/new/video" element={<VideoFormPage />} />
+                <Route path="/projects/new/media" element={<MediaFormPage />} />
                 <Route path="/projects/new/images" element={<ImagesFormPage />} />
               </Route>
             </Route>
@@ -95,7 +95,6 @@ function App() {
         </Routes>
       }
     />
-
   );
 }
 

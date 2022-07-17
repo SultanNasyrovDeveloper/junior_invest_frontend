@@ -1,13 +1,12 @@
-import { Button, Form, Space, Input } from "antd";
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { newProjectStore } from 'store';
 import { updateProject } from '../api';
-import { YoutubeVideoForm } from '../components'
+import { MediaForm } from '../components'
 
-const VideoFormPage = () => {
+const MediaFormPage = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -47,7 +46,7 @@ const VideoFormPage = () => {
   }, [location]);
 
   return (
-    <YoutubeVideoForm
+    <MediaForm
       initialValues={initialValues}
       onPrevious={handlePrevious}
       onNext={handleNext}
@@ -56,4 +55,4 @@ const VideoFormPage = () => {
   );
 };
 
-export default observer(VideoFormPage);
+export default observer(MediaFormPage);

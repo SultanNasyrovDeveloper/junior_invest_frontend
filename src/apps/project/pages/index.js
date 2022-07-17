@@ -6,4 +6,4 @@ export { default as NewProjectPage } from './NewProjectPage';
 export { default as PresentationFormPage } from './PresentationFormPage';
 export { default as ProjectListPage } from './ProjectListPage';
 export { default as ProjectDetailPage } from './ProjectDetailPage';
-export { default as VideoFormPage } from './VideoFormPage';
+export { default as MediaFormPage } from './MediaFormPage';

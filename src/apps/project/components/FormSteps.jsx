@@ -3,7 +3,7 @@ import {
   ContainerOutlined,
   FileImageOutlined,
   SnippetsOutlined,
-  YoutubeOutlined
+  FolderViewOutlined
 } from "@ant-design/icons";
 import React from 'react';
 import { observer } from 'mobx-react-lite';
@@ -26,8 +26,8 @@ const FormSteps = () => {
         icon={<SnippetsOutlined />}
       />
       <Steps.Step
-        title="Видео"
-        icon={<YoutubeOutlined />}
+        title="Медиа"
+        icon={<FolderViewOutlined />}
       />
       <Steps.Step
         title="Изображения"
