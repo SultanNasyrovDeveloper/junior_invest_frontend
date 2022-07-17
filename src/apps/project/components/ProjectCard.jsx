@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import { Card, Row, Space, Image, Skeleton } from "antd";
+import { Card, Row, Space, Image } from "antd";
 import { HeartOutlined }  from '@ant-design/icons';
-import noImage from 'assets/no-image.png';
 
 import styled from 'styled-components';
 
@@ -13,10 +12,6 @@ const ProjectCardStyled = styled(Card)`
     width: 100%;
     height: 100%;
   }
-`;
-
-const StyledSkeletonImage = styled(Skeleton.Image)`
-  width: 100%;
 `;
 
 const ProjectCard = (props) => {

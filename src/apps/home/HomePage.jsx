@@ -1,11 +1,18 @@
 import React from 'react';
 import { useTitle } from 'react-use';
 
+import { Banner } from './components';
+
 const HomePage = () => {
   useTitle(' Junior Invest');
 
   return (
     <div>
+      <Banner
+        title="Junior Invest"
+        subtitle="Платформа для поддержки проектов талантливых детей"
+        actions="Таомртвло"
+      />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper ex et purus accumsan,
         quis dignissim mauris sagittis. Ut augue libero, euismod at orci eu, scelerisque iaculis arcu.
