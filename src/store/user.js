@@ -5,13 +5,14 @@ import { client } from 'api';
 import {
   fetchMeUrl,
   tokenObtainUrl,
-  userDetailUrl,
   usersUrl,
   activateAccountUrl,
+  projectsUrl
 } from 'api/urls';
 
 class UserStore {
   user = null;
+  myProjects = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -54,6 +55,18 @@ class UserStore {
          this.user = _.merge(this.user, response.data);
        }
      });
+  }
+
+  async fetchMyProjects() {
+    const response = await client.get(
+      projectsUrl,
+      { params: { author: this.user.id}}
+    );
+    const myProjects = _.get(response, 'data.results');
+    runInAction(() => {
+      this.myProjects = myProjects;
+    });
+    return myProjects;
   }
 
   async activateAccount(uid, token) {

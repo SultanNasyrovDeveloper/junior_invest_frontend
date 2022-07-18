@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Card, Row, Space, Image } from "antd";
+import { Card, Row, Space, Image, Tag } from "antd";
 import { HeartOutlined }  from '@ant-design/icons';
 
 import styled from 'styled-components';
@@ -14,9 +14,29 @@ const ProjectCardStyled = styled(Card)`
   }
 `;
 
+const projectStatusesTranslate = {
+  created: 'Заполняется',
+  filled: 'На модерации',
+  moderated: 'Модерация пройдена'
+};
+
+const projectStatusesColor = {
+  created: 'orange',
+  filled: 'blue',
+  moderated: 'green'
+};
+
+const getProjectsStatus = (status) => {
+  return projectStatusesTranslate[status];
+}
+
+const getTagColor = (status) => {
+  return projectStatusesColor[status];
+}
+
 const ProjectCard = (props) => {
 
-  const { project, onClick } = props;
+  const { project, onClick, showStatus } = props;
 
   return (
     <ProjectCardStyled
@@ -46,6 +66,12 @@ const ProjectCard = (props) => {
       <Row>
         { project.name }
       </Row>
+      {
+        showStatus &&
+        <Tag color={getTagColor(project.status)}>
+          { getProjectsStatus(project.status) }
+        </Tag>
+      }
       <Row justify="space-between">
         {`${project.author?.last_name} ${project.author?.first_name}`}
 

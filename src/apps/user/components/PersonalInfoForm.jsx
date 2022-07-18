@@ -5,7 +5,7 @@ import {MailOutlined, UserOutlined} from "@ant-design/icons";
 
 const PersonalInfoForm = (props) => {
 
-  const { initialValues, onSubmit } = props;
+  const { initialValues, loading, onSubmit } = props;
 
   return (
       <Row gutter={5}>
@@ -55,6 +55,7 @@ const PersonalInfoForm = (props) => {
               <Form.Item
               >
                 <Button
+                  loading={loading}
                   type="primary"
                   htmlType="submit"
                 >Сохранить</Button>

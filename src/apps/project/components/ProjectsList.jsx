@@ -7,7 +7,7 @@ import ProjectCard from './ProjectCard';
 
 const ProjectsList = (props) => {
 
-  const { projects, onClick } = props;
+  const { projects, showProjectStatus, onClick } = props;
 
   return (
     <VerticalMarginRow gutter={[8, 8]}>
@@ -23,6 +23,7 @@ const ProjectsList = (props) => {
             <ProjectCard
               project={project}
               onClick={onClick}
+              showStatus={showProjectStatus}
             />
           </Col>
         ))
