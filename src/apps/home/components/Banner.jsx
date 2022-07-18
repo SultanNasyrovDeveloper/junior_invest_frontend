@@ -1,19 +1,38 @@
+import { Typography, Row, Col, Card } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
-import bannerBackground from 'assets/banner-background.jpg';
+import { ReactComponent as Logo } from 'assets/icons/logo_text.svg';
 
-const BannerContainer = styled.div`
+const BannerContainer = styled(Card)`
   width: 100%;
   height: 85vh;
-  background-image: url(${bannerBackground})
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    .banner-logo {
+      margin-bottom: 2rem
+    }
+  }
 `;
+
 
 const Banner = () => {
 
-
   return (
-    <BannerContainer>
+    <BannerContainer >
+      <Logo className="banner-logo"/>
+      <Typography.Title level={2}>
+        Плафторма поддрежки проектов для детей от 7 до 16 лет
+      </Typography.Title>
 
     </BannerContainer>
   );
