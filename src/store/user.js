@@ -7,8 +7,10 @@ import {
   tokenObtainUrl,
   usersUrl,
   activateAccountUrl,
-  projectsUrl
+  projectsUrl,
+  projectVotesUrl
 } from 'api/urls';
+import payloadasync from "async";
 
 class UserStore {
   user = null;
@@ -67,6 +69,11 @@ class UserStore {
       this.myProjects = myProjects;
     });
     return myProjects;
+  }
+
+  async vote(projectId) {
+    const payload = { user: this.user.id, project: projectId }
+    await client.post(projectVotesUrl, payload);
   }
 
   async activateAccount(uid, token) {

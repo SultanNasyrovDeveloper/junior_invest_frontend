@@ -24,7 +24,6 @@ const BannerContainer = styled(Card)`
   }
 `;
 
-
 const Banner = () => {
 
   return (

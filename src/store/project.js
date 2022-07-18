@@ -21,6 +21,10 @@ class ProjectStore {
     this.projectsList = projectsList;
   }
 
+  addVote() {
+    this.projectDetail['votes_count'] = this.projectDetail['votes_count'] + 1
+  }
+
   async getProjectDetail(projectId) {
     try {
       const response = await client.get(projectDetailUrl(projectId));
