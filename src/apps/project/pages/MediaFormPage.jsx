@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { newProjectStore } from 'store';
@@ -12,11 +12,11 @@ const MediaFormPage = () => {
   const navigate = useNavigate();
 
   const initialValues = useMemo(() => {
-    if (!newProjectStore.youtubeVideoUrl) {
+    if (!newProjectStore.media) {
       return {};
     }
-    return { youtube_video_url: newProjectStore.youtubeVideoUrl };
-  }, [newProjectStore.youtubeVideoUrl])
+    return { media: newProjectStore.media };
+  }, [newProjectStore.media])
 
 
   const handleFormSubmit = useCallback(async (validatedData) => {

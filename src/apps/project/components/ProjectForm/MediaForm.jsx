@@ -1,66 +1,70 @@
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import _ from "lodash";
+import { Button, Row, Space, Col, Typography } from 'antd';
 import React from 'react';
 
-const MediaForm = () => {
-  const onFinish = (values) => {
-    console.log('Received values of form:', values);
-  };
+import {mediaValidationSchema} from "./validation";
+import { Input, Form } from "formik-antd";
+import { Formik, FieldArray } from "formik";
 
+const MediaForm = (props) => {
+
+  const { initialValues, onPrevious, onNext, onSubmit } = props;
   return (
-    <Form
-      name="dynamic_form_item"
-      layout="vertical"
-      onFinish={onFinish}
+    <Formik
+      initialValues={initialValues}
+      validationSchema={mediaValidationSchema}
+      onSubmit={onSubmit}
     >
-      <Form.List name="media">
-        {(fields, { add, remove }, { errors }) => (
-          <>
-            {fields.map((field, index) => (
-              <Form.Item
-                label={index === 0 ? 'Ссылки на медиа ресурсы' : ''}
-                required={false}
-                key={field.key}
-              >
-                <Form.Item
-                  {...field}
-                  validateTrigger={['onBlur']}
-                  name="url"
-                  rules={[
-                    {
-                      required: true,
-                      type: 'url',
-                      message: "Введите влидную ссылку на медиа ресурс или удалите это поле",
-                    },
-                  ]}
-                  noStyle
-                >
-                  <Input placeholder="Ссылка на ресурс" style={{ width: '90%' }} />
-                </Form.Item>
-                <MinusCircleOutlined
-                  style={{ marginLeft: '1rem' }}
-                  onClick={() => remove(field.name)}
-                />
-              </Form.Item>
-            ))}
-            <Form.Item>
+      {({ touched, isValid, values }) => (
+
+        <Form layout="vertical">
+          <Typography>Ссылки на медиа ресурсы</Typography>
+          <FieldArray name="media">
+            { ({ remove, push }) => (
+              <>
+                {
+                  values.media?.length > 0 &&
+                  values.media.map((media, index) => (
+                    <>
+                      <Row key={`media.[${index}].url`}>
+                        <Col xs={24} md={20}>
+                          <Form.Item name={`media.[${index}].url`}>
+                            <Input name={`media.[${index}].url`} placeholder="Адрес ресурса"/>
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} md={4}>
+                          <Button onClick={() => remove(index)}>Удалить</Button>
+                        </Col>
+
+                      </Row>
+
+                    </>
+                  ))
+                }
+                <Button onClick={() => push({ url: '' })}>Добавить</Button>
+              </>
+            ) }
+          </FieldArray>
+
+          <Row justify="end">
+            <Space>
               <Button
-                type="dashed"
-                onClick={() => add()}
-                icon={<PlusOutlined />}
-              >
-                Добавить
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+                onClick={onPrevious}
+              >Предыдущий шаг</Button>
+              <Button
+                disabled={!isValid || !_.isEmpty(touched) || _.isEmpty(values)}
+                onClick={onNext}
+              >Пропустить</Button>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={!isValid }
+              >Сохранить и продолжить</Button>
+            </Space>
+          </Row>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

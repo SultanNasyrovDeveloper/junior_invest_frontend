@@ -60,7 +60,7 @@ class UserStore {
   async fetchMyProjects() {
     const response = await client.get(
       projectsUrl,
-      { params: { author: this.user.id}}
+      { params: { author: this.user.id }}
     );
     const myProjects = _.get(response, 'data.results');
     runInAction(() => {

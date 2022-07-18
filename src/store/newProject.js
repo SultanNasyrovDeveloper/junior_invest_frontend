@@ -18,8 +18,8 @@ class NewProjectStore {
     return _.get(this.project, 'presentation');
   }
 
-  get youtubeVideoUrl() {
-    return _.get(this.project, 'youtube_video_url');
+  get media() {
+    return _.get(this.project, 'media');
   }
 
   get images() {

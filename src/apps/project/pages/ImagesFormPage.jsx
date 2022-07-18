@@ -165,7 +165,7 @@ const ImagesFormPage = () => {
       </Form.Item>
       <Row justify="end">
         <Space>
-          <Link to="/projects/new/video">
+          <Link to="/projects/new/media">
             <Button>Предыдущий шаг</Button>
           </Link>
 

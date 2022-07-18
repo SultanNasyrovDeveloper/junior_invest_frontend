@@ -21,3 +21,9 @@ export const youtubeVideoValidationSchema = yup.object().shape({
       }
     )
 });
+
+export const mediaValidationSchema = yup.object().shape({
+  media: yup.array().of(yup.object().shape({
+    url: yup.string().required('Это поле обязательное').url('Введите валидный адрес ресурса')
+  }))
+})
