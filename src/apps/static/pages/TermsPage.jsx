@@ -2,18 +2,18 @@ import { PageHeader, Col, Card } from 'antd';
 import React from 'react';
 import { useAsync } from 'react-use';
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import { VerticalMarginRow } from 'components';
 import { appStore } from 'store';
 
-const AboutPage = () => {
+const TermsPage = () => {
 
   const navigate = useNavigate();
 
   useAsync(async () => {
     try {
-      await appStore.fetchAbout();
+      await appStore.fetchTerms();
     }
     catch(error) {
       navigate('/not-found');
@@ -23,7 +23,7 @@ const AboutPage = () => {
   return (
     <>
       <PageHeader
-        title="О нас"
+        title="Правила платформы"
         ghost={false}
       />
 
@@ -31,8 +31,8 @@ const AboutPage = () => {
         <Col span={24}>
           <Card >
             {
-              appStore.about &&
-              <div dangerouslySetInnerHTML={{ __html: appStore.about.content }} />
+              appStore.terms &&
+              <div dangerouslySetInnerHTML={{ __html: appStore.terms?.content }} />
             }
           </Card>
         </Col>
@@ -42,4 +42,4 @@ const AboutPage = () => {
   );
 };
 
-export default observer(AboutPage);
+export default observer(TermsPage);

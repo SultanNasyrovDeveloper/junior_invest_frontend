@@ -27,6 +27,10 @@ import {
   ProjectDetailPage,
   MediaFormPage
 } from 'apps/project';
+import {
+  TermsPage,
+  AboutPage
+} from 'apps/static';
 import { appStore } from 'store';
 
 import {
@@ -65,6 +69,8 @@ function App() {
         <Routes>
           {/* public routes */}
           <Route path="/" element={<HomePage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/registration/success" element={<RegistrationSuccessPage />} />

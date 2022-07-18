@@ -10,6 +10,8 @@ export const fetchMeUrl = 'auth/users/me/';
 export const userDetailUrl = (userId) => `auth/users/${userId}/`;
 export const projectVotesUrl = 'project/votes/';
 
+export const pagesUrl = 'pages/pages/';
+
 export const projectCategoriesUrl = 'project/categories/';
 
 export const projectsUrl = 'project/projects/';

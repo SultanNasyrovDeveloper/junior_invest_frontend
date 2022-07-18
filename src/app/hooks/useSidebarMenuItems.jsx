@@ -35,7 +35,7 @@ const useSidebarMenuItems = () => {
       },
 
       {
-        key: '/terms-of-use',
+        key: '/terms',
         icon: <FileDoneOutlined />,
         label: (
           <span>Правила</span>
