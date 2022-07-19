@@ -154,7 +154,7 @@ const ImagesFormPage = () => {
           onRemove={handleRemove}
         >
           {files.length >= 5 ? null : uploadButton}
-        </Upload>
+        </Upload >
         {uploadProgress > 0 ? <Progress percent={uploadProgress} /> : null}
         <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
           <img

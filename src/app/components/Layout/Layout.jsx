@@ -38,17 +38,17 @@ const AppLayout = (props) => {
             <MainContainerStyled>
               { content }
 
+              <StyledFooter>
+                <Row>
+                  <Col span={24}>
+                    <Card>
+                      { footer }
+                    </Card>
+                  </Col>
+                </Row>
+              </StyledFooter>
             </MainContainerStyled>
           </ContentInnerContainerStyled>
-          <StyledFooter>
-            <Row>
-              <Col span={24}>
-                <Card>
-                  { footer }
-                </Card>
-              </Col>
-            </Row>
-          </StyledFooter>
         </ScrollableContentStyled>
 
         <DrawerStyled
