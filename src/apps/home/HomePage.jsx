@@ -10,10 +10,11 @@ import viewProjectsImage from 'assets/icons/viewProjects.png';
 import { projectStore } from 'store';
 
 import { VerticalMarginRow } from 'components';
-import { Banner, Projects } from './components';
+import { Banner, Projects, Categories } from './components';
 import { StyledHomePageRow } from './components/components.styled';
 
 const ObservingProjects = observer(Projects);
+const ObservingCategories = observer(Categories);
 
 const HomePage = () => {
   useTitle('Junior Invest');
@@ -22,6 +23,7 @@ const HomePage = () => {
   useAsync(async () => {
     const queryParams = { limit: 8, status: 'moderated' };
     await projectStore.fetchProjects(queryParams);
+    await projectStore.fetchProjectCategories();
   }, []);
 
   return (
@@ -29,7 +31,6 @@ const HomePage = () => {
       <Banner
         title="Junior Invest"
         subtitle="Платформа для поддержки проектов талантливых детей"
-        actions="Таомртвло"
       />
 
       <StyledHomePageRow gutter={5}>
@@ -58,6 +59,15 @@ const HomePage = () => {
           </Card>
         </Col>
       </StyledHomePageRow>
+
+      <ObservingCategories
+        categories={projectStore.projectCategories}
+        onClick={(categoryId) => navigate({
+          pathname: '/projects',
+          search: `?category=${categoryId}`,
+        })}
+        onButtonClick={() => navigate('/projects')}
+      />
 
       <ObservingProjects
         projects={projectStore.projectsList}

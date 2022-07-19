@@ -2,7 +2,11 @@ import _ from 'lodash';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 import { client } from 'api';
-import { projectDetailUrl, projectsUrl } from 'api/urls';
+import {
+  projectCategoriesUrl,
+  projectDetailUrl,
+  projectsUrl
+} from 'api/urls';
 
 class ProjectStore {
   projectCategories = null;
@@ -48,6 +52,16 @@ class ProjectStore {
       this.projectsList = projects
     });
     return projects;
+  }
+
+  async fetchProjectCategories() {
+    const response = await client.get(
+      projectCategoriesUrl,
+      { params: { limit: 5000 }}
+    );
+    runInAction(() => {
+      this.projectCategories = response.data.results;
+    });
   }
 }
 

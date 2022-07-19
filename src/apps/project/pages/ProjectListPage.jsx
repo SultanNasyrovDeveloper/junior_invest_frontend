@@ -7,8 +7,8 @@ import {
 } from 'antd';
 import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
-import React, { useState, useMemo, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTitle, useAsync } from 'react-use';
 
 import { VerticalMarginRow } from 'components';
@@ -26,6 +26,7 @@ const ObservingCategorySelectFilter = observer(CategoryFilterSelectMenu);
 const ProjectListPage = () => {
 
   useTitle('Список проектов');
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
@@ -54,19 +55,33 @@ const ProjectListPage = () => {
     return queryParams;
   }, [page, pageSize, ordering, chosenCategories]);
 
+  const addChosenCategory = (categoryId) => {
+    setChosenCategories(prev => {
+      const newChosenCategories = new Set(prev);
+      newChosenCategories.add(categoryId);
+      return newChosenCategories;
+    })
+  };
+
+  const removeChosenCategory = (categoryId) => {
+    setChosenCategories(prev => {
+      const newChosenCategories = new Set(prev);
+      newChosenCategories.delete(categoryId);
+      return newChosenCategories;
+    });
+  };
+
   const handleCategoryFilterChange = useCallback((event, categoryId) => {
     event.target.checked
-      ? setChosenCategories(prev => {
-        const newChosenCategories = new Set(prev);
-        newChosenCategories.add(categoryId);
-        return newChosenCategories;
-      })
-      : setChosenCategories(prev => {
-        const newChosenCategories = new Set(prev);
-        newChosenCategories.delete(categoryId);
-        return newChosenCategories;
-      });
+      ? addChosenCategory(categoryId)
+      : removeChosenCategory(categoryId);
   }, []);
+
+  useEffect(() => {
+    if (searchParams.has('category')) {
+      addChosenCategory(parseInt(searchParams.get('category')));
+    }
+  }, [searchParams]);
 
   useAsync(async () => {
     try {
