@@ -26,10 +26,9 @@ const ProjectDetailPage = () => {
 
   const project = useMemo(() => {
     return projectStore.projectDetail;
-  }, [projectStore.projectDetail])
+  }, [projectStore.projectDetail]);
 
   const vote = useCallback(async () => {
-    console.log('Vote')
     try {
       await userStore.vote(project.id);
       projectStore.addVote();
@@ -56,6 +55,11 @@ const ProjectDetailPage = () => {
             type="primary"
             icon={<LikeFilled style={{ marginRight: 5}}/>}
             onClick={vote}
+            disabled={
+              project?.author?.id === userStore.user?.id
+              || projectStore.isAlreadyVoted(userStore.user?.id)
+              || !userStore.user
+            }
           >
             <Space>{project?.votes_count} Голосовать</Space>
           </Button>
@@ -126,9 +130,7 @@ const ProjectDetailPage = () => {
                     ))
                   }
                 </Descriptions.Item>
-
               }
-
             </Descriptions>
           </Card>
         </Col>
