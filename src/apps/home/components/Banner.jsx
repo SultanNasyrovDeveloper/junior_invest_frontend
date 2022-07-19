@@ -24,14 +24,21 @@ const BannerContainer = styled(Card)`
   }
 `;
 
+const HeaderText = styled.span`
+  font-size: 5rem;
+  font-weight: bold;
+  color: #0D6EFD;
+  text-align: center;
+`;
+
 const Banner = () => {
 
   return (
     <BannerContainer >
       <Logo className="banner-logo"/>
-      <Typography.Title level={1}>
+      <HeaderText>
          Раскрути свою идею!
-      </Typography.Title>
+      </HeaderText>
       <Typography.Title level={2}>
         Платформа поддержки проектов детей от 7 до 17 лет
       </Typography.Title>

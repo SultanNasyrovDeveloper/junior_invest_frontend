@@ -45,7 +45,7 @@ import { useScrollTop } from './hooks'
 import { NotFoundPage } from './pages';
 
 function App() {
-  useScrollTop()
+  useScrollTop();
   return (
     <Layout
       header={
