@@ -8,6 +8,7 @@ class AppStore {
   isSidebarVisible = false;
   terms = null;
   about = null;
+  policy = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -40,6 +41,15 @@ class AppStore {
     const aboutData = _.get(response, 'data.results[0]');
     runInAction(() => {
       this.about = aboutData;
+    })
+  }
+
+  async fetchPolicy() {
+    const queryParams = { 'url': '/policy' }
+    const response = await client.get(pagesUrl, { params: queryParams });
+    const policyData = _.get(response, 'data.results[0]');
+    runInAction(() => {
+      this.policy = policyData;
     })
   }
 }

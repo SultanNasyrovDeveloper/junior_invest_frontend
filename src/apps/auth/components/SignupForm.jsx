@@ -27,7 +27,7 @@ const SignupForm = (props) => {
       >
         <Input
           size="large"
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          prefix={<UserOutlined />}
           placeholder="Иванов"
         />
       </Form.Item>
@@ -39,12 +39,12 @@ const SignupForm = (props) => {
       >
         <Input
           size="large"
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          prefix={<UserOutlined />}
           placeholder="Иван"
         />
       </Form.Item>
       <Form.Item
-        label="Эллектронаня почта"
+        label="Электронная почта"
         name="email"
         rules={[{
           required: true,

@@ -45,7 +45,7 @@ const Footer = () => {
             <List.Item>
               <List.Item.Meta
                 avatar={<ReconciliationOutlined />}
-                title={<Link to="/">Политика конфиденциальности</Link>}
+                title={<Link to="/policy">Политика конфиденциальности</Link>}
               />
             </List.Item>
           </List>

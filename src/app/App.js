@@ -29,7 +29,8 @@ import {
 } from 'apps/project';
 import {
   TermsPage,
-  AboutPage
+  AboutPage,
+  PolicyPage
 } from 'apps/static';
 import { appStore } from 'store';
 
@@ -70,6 +71,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/policy" element={<PolicyPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/registration/success" element={<RegistrationSuccessPage />} />

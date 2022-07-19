@@ -46,4 +46,5 @@ export const DrawerStyled = styled(Drawer)`
 
 
 export const StyledFooter = styled(Layout.Footer)`
+  margin-top: 10rem;
 `;
