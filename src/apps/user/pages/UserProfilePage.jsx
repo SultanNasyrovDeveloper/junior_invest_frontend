@@ -3,6 +3,7 @@ import _ from 'lodash';
 import React, { useState, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useTitle, useAsync } from 'react-use';
+import { useNavigate } from 'react-router-dom';
 
 import { VerticalMarginRow } from 'components';
 import { userStore } from 'store';
@@ -19,6 +20,7 @@ const tabs = [
 
 const UserProfilePage = () => {
   useTitle('Профиль пользователя');
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('personal');
   const [dataIsUploading, setDataIsUploading] = useState(false);
 
@@ -49,7 +51,12 @@ const UserProfilePage = () => {
   }, []);
 
   const handleProjectClick = useCallback((project) => {
-    console.log(project);
+    if (project.status === 'created') {
+      navigate('/projects/new/general');
+      return;
+    }
+    navigate(`/projects/${project.id}`);
+
   }, []);
 
   useAsync(async () => {
