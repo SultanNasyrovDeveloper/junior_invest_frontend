@@ -6,7 +6,7 @@ import { AuthService } from 'apps/auth';
 import { tokenObtainUrl, tokenRefreshUrl } from './urls';
 
 const client = axios.create({
-  baseURL: 'https://juniorinvest.ru/api/v1/',
+  baseURL: process.env.REACT_APP_API_HOST,
   timeout: 10000,
 });
 
