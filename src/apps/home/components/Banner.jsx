@@ -29,6 +29,9 @@ const Banner = () => {
   return (
     <BannerContainer >
       <Logo className="banner-logo"/>
+      <Typography.Title level={1}>
+         Раскрути свою идею!
+      </Typography.Title>
       <Typography.Title level={2}>
         Платформа поддержки проектов детей от 7 до 17 лет
       </Typography.Title>
