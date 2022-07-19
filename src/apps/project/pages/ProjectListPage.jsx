@@ -45,6 +45,7 @@ const ProjectListPage = () => {
   const queryParams = useMemo(() => {
     const queryParams = new URLSearchParams();
     queryParams.append('order', ordering);
+    queryParams.append('status', 'moderated');
     queryParams.append('limit', pageSize);
     queryParams.append('offset', pageSize * (page - 1))
     chosenCategories.forEach(categoryId => {

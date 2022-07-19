@@ -11,7 +11,7 @@ import { useAuth } from '../hooks';
 import AuthService from '../service';
 
 const SigninPage = () => {
-  useTitle('Вход в систему')
+  useTitle('Вход в систему');
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoggedIn, setIsLoggedIn } = useAuth();
