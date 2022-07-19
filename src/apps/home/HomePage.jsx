@@ -15,7 +15,7 @@ import { Banner, Projects } from './components';
 const ObservingProjects = observer(Projects);
 
 const HomePage = () => {
-  useTitle(' Junior Invest');
+  useTitle('Junior Invest');
   const navigate = useNavigate();
 
   useAsync(async () => {

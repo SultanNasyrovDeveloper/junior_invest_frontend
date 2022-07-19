@@ -5,9 +5,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { newProjectStore } from 'store';
 import { updateProject } from '../api';
 import { MediaForm } from '../components'
+import { useTitle } from "react-use";
 
 const MediaFormPage = () => {
 
+  useTitle('Форма создания проекта - медиа файлы');
   const location = useLocation();
   const navigate = useNavigate();
 

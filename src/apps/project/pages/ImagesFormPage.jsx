@@ -6,6 +6,7 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 
 import { newProjectStore } from 'store';
 import { createProjectImage, deleteProjectImage, updateProject } from '../api';
+import {useTitle} from "react-use";
 
 const getBase64 = (file)  =>
   new Promise((resolve, reject) => {
@@ -18,6 +19,8 @@ const getBase64 = (file)  =>
 const maxImageSize = 1024 * 1000 * 3;
 
 const ImagesFormPage = () => {
+
+  useTitle('Форма создания проекта - загрузка изображений');
 
   const location = useLocation();
   const navigate = useNavigate();

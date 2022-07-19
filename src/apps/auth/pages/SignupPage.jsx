@@ -5,8 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { signup } from '../api'
 import { SignupForm } from '../components';
+import { useTitle } from "react-use";
 
 const SingupPage = () => {
+
+  useTitle('Регистрация');
 
   const formRef = useRef(null);
   const navigate = useNavigate();

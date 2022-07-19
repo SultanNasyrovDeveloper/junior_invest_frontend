@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAsync } from 'react-use';
+import { useAsync, useTitle } from 'react-use';
 
 import { activateAccount } from '../api';
 
@@ -8,6 +8,7 @@ const ActivateAccountPage = () => {
 
   const { uid, token } = useParams();
   const navigate = useNavigate();
+  useTitle('Страница активации аккаунта');
 
   useAsync(async() => {
     try {

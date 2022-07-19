@@ -13,7 +13,7 @@ import { LikeFilled } from '@ant-design/icons';
 import _ from 'lodash';
 import React, { useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useAsync } from 'react-use';
+import { useAsync, useTitle } from 'react-use';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { VerticalMarginRow } from 'components';
@@ -22,6 +22,7 @@ import { projectStore, userStore } from 'store';
 const ProjectDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  useTitle('Информация о проекте');
 
   const project = useMemo(() => {
     return projectStore.projectDetail;

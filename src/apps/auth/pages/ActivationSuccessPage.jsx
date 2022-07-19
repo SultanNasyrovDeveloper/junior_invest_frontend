@@ -1,8 +1,12 @@
 import React from 'react';
 import { Button, Card, Result } from "antd";
 import { Link } from "react-router-dom";
+import { useTitle } from "react-use";
 
 const ActivationSuccessPage = () => {
+
+  useTitle('Активация успешна');
+
   return (
     <Card>
       <Result

@@ -8,11 +8,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { newProjectStore } from 'store';
 
 import { updateProject } from '../api';
+import {useTitle} from "react-use";
 
 const maxSize = 1024 * 1000 * 5;
 
 const PresentationFormPage = () => {
-
+  useTitle('Форма создания проекта - презентация');
   const location = useLocation();
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);

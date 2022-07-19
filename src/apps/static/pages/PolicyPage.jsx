@@ -1,6 +1,6 @@
 import { PageHeader, Col, Card } from 'antd';
 import React from 'react';
-import { useAsync } from 'react-use';
+import {useAsync, useTitle} from 'react-use';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import { appStore } from 'store';
 
 const PolicyPage = () => {
 
+  useTitle('Политика конфиденциальности');
   const navigate = useNavigate();
 
   useAsync(async () => {

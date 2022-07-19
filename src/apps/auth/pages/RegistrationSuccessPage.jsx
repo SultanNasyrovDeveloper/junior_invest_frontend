@@ -1,8 +1,11 @@
 import { Result, Button, Card } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTitle } from "react-use";
 
 const RegistrationSuccessPage = () => {
+
+  useTitle('Подтверждение регистрации');
 
   return (
     <Card>
