@@ -17,23 +17,25 @@ const SingupPage = () => {
   const [loading, setLoading] = useState(false);
 
   const handleFormSubmit = useCallback(async (validatedData) => {
-    setLoading(true);
-    try {
-      await signup(validatedData);
-      navigate('/registration/success');
-    }
-    catch(error) {
-      if (error.response?.status === 400) {
-        const serverErrors = error.response.data;
-        const formErrors = [];
-        _.forIn(serverErrors, (fieldErrorMessages, fieldName) => {
-          formErrors.push({name: fieldName, errors: fieldErrorMessages});
-        });
-        formRef.current.setFields(formErrors);
+    if (!loading) {
+      setLoading(true);
+      try {
+        await signup(validatedData);
+        navigate('/registration/success');
       }
-    }
-    finally {
-      setLoading(false);
+      catch(error) {
+        if (error.response?.status === 400) {
+          const serverErrors = error.response.data;
+          const formErrors = [];
+          _.forIn(serverErrors, (fieldErrorMessages, fieldName) => {
+            formErrors.push({name: fieldName, errors: fieldErrorMessages});
+          });
+          formRef.current.setFields(formErrors);
+        }
+      }
+      finally {
+        setLoading(false);
+      }
     }
   },[]);
 

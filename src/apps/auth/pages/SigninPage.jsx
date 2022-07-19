@@ -27,24 +27,26 @@ const SigninPage = () => {
   }, [navigate])
 
   const handleFormSubmit = useCallback(async (credentials) => {
-    setLoading(true);
-    try {
-      const tokens = await userStore.signin(credentials);
-      AuthService.login(tokens);
-      setIsLoggedIn(true);
-      await userStore.fetchMe();
-      navigate(targetLocation);
-    } catch(error) {
-      notification.error({
-        message: 'Не удалось войти в систему',
-        description: 'Пользователь с таким именем и паролем не найден попробуйте еще раз.'
-      });
-      AuthService.logout();
-      setIsLoggedIn(false);
-      formRef.current.resetFields()
-    }
-    finally {
-      setLoading(false);
+    if (!loading) {
+      setLoading(true);
+      try {
+        const tokens = await userStore.signin(credentials);
+        AuthService.login(tokens);
+        setIsLoggedIn(true);
+        await userStore.fetchMe();
+        navigate(targetLocation);
+      } catch(error) {
+        notification.error({
+          message: 'Не удалось войти в систему',
+          description: 'Пользователь с таким именем и паролем не найден попробуйте еще раз.'
+        });
+        AuthService.logout();
+        setIsLoggedIn(false);
+        formRef.current.resetFields()
+      }
+      finally {
+        setLoading(false);
+      }
     }
   }, [setIsLoggedIn, targetLocation]);
 
