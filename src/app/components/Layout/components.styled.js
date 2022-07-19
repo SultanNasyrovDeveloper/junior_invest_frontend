@@ -43,3 +43,7 @@ export const DrawerStyled = styled(Drawer)`
     padding: 0;
   }
 `;
+
+
+export const StyledFooter = styled(Layout.Footer)`
+`;

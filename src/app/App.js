@@ -37,7 +37,8 @@ import {
   Layout,
   HeaderLayout,
   UserMenu,
-  SidebarMenu
+  SidebarMenu,
+  Footer
 } from './components';
 import { NotFoundPage } from './pages';
 
@@ -59,10 +60,8 @@ function App() {
           userMenu={<UserMenu/>}
         />
       }
-      footer={<div>Footer</div>}
-      navigationPanel={
-        <SidebarMenu />
-      }
+      footer={<Footer />}
+      navigationPanel={<SidebarMenu />}
       isShowNavigation={appStore.isSidebarVisible}
       onNavigationClose={() => appStore.closeSidebar()}
       content={

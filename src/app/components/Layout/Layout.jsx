@@ -1,3 +1,4 @@
+import { Card, Row, Col } from 'antd';
 import React from 'react';
 
 import {
@@ -8,7 +9,8 @@ import {
   ScrollableContentStyled,
   ContentInnerContainerStyled,
   DrawerStyled,
-  MainContainerStyled
+  MainContainerStyled,
+  StyledFooter
 } from './components.styled';
 
 const AppLayout = (props) => {
@@ -31,17 +33,23 @@ const AppLayout = (props) => {
       </HeaderStyled>
 
       <ContentOuterContainerStyled>
-
         <ScrollableContentStyled>
-
           <ContentInnerContainerStyled>
             <MainContainerStyled>
               { content }
+
             </MainContainerStyled>
           </ContentInnerContainerStyled>
-
+          <StyledFooter>
+            <Row>
+              <Col span={24}>
+                <Card>
+                  { footer }
+                </Card>
+              </Col>
+            </Row>
+          </StyledFooter>
         </ScrollableContentStyled>
-
 
         <DrawerStyled
           visible={isShowNavigation}
