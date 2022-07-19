@@ -1,12 +1,14 @@
+import axios from 'axios';
 import _ from 'lodash';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 import { client } from 'api';
-import { pagesUrl } from 'api/urls';
+import { pagesUrl, termsFilesUrl } from 'api/urls';
 
 class AppStore {
   isSidebarVisible = false;
   terms = null;
+  termFiles = null;
   about = null;
   policy = null;
 
@@ -27,12 +29,17 @@ class AppStore {
   }
 
   async fetchTerms() {
-    const queryParams = { 'url': '/terms' }
-    const response = await client.get(pagesUrl, { params: queryParams });
-    const termsData = _.get(response, 'data.results[0]');
+    const queryParams = { 'url': '/terms' };
+    const responses = await axios.all([
+      client.get(pagesUrl, { params: queryParams }),
+      client.get(termsFilesUrl)
+    ]);
+    const termsData = _.get(responses, '0.data.results.0');
+    const files = _.get(responses, '1.data.results');
     runInAction(() => {
       this.terms = termsData;
-    })
+      this.termFiles = files;
+    });
   }
 
   async fetchAbout() {

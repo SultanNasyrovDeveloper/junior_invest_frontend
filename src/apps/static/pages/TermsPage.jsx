@@ -16,6 +16,7 @@ const TermsPage = () => {
       await appStore.fetchTerms();
     }
     catch(error) {
+      console.log(error);
       navigate('/not-found');
     }
   }, []);
@@ -38,6 +39,22 @@ const TermsPage = () => {
         </Col>
       </VerticalMarginRow>
 
+        {
+          appStore.termFiles &&
+          <VerticalMarginRow>
+            <Col span={24}>
+              <Card
+                title="Документы"
+              >
+                {
+                  appStore.termFiles.map(file => (
+                    <a href={file.url}>{file.name}</a>
+                  ))
+                }
+              </Card>
+            </Col>
+          </VerticalMarginRow>
+        }
     </>
   );
 };

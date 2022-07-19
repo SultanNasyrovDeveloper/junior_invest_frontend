@@ -7,10 +7,10 @@ export const activateAccountUrl = 'auth/users/activation/';
 export const usersUrl = 'auth/users/';
 export const myUserUrl = 'auth/users/me/';
 export const fetchMeUrl = 'auth/users/me/';
-export const userDetailUrl = (userId) => `auth/users/${userId}/`;
 export const projectVotesUrl = 'project/votes/';
 
 export const pagesUrl = 'pages/pages/';
+export const termsFilesUrl = 'pages/terms_files/';
 
 export const projectCategoriesUrl = 'project/categories/';
 
