@@ -1,8 +1,8 @@
 import {Typography, Button, Col, Row, Empty} from 'antd';
 import React from 'react';
 
-import { VerticalMarginRow } from 'components';
-import ProjectCard from "../../project/components/ProjectCard";
+import { StyledHomePageRow } from './components.styled';
+import ProjectCard from "apps/project/components/ProjectCard";
 
 const Projects = (props) => {
 
@@ -10,11 +10,11 @@ const Projects = (props) => {
 
   return (
     <>
-      <VerticalMarginRow justify="center">
+      <StyledHomePageRow justify="center">
         <Typography.Title level={2}>Проекты</Typography.Title>
-      </VerticalMarginRow>
+      </StyledHomePageRow>
 
-      <VerticalMarginRow gutter={[8, 8]}>
+      <StyledHomePageRow gutter={[8, 8]}>
         {
           projects?.map(project => (
             <Col
@@ -41,15 +41,16 @@ const Projects = (props) => {
             <Empty description="Список проектов пуст" />
           </Row>
         }
-      </VerticalMarginRow>
+      </StyledHomePageRow>
 
 
-      <VerticalMarginRow justify="center">
+      <StyledHomePageRow justify="center">
         <Button
+          size="large"
           onClick={onButtonClick}
           type="primary"
         >Смотреть еще</Button>
-      </VerticalMarginRow>
+      </StyledHomePageRow>
     </>
   );
 };

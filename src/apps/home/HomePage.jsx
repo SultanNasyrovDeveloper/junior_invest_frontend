@@ -11,6 +11,7 @@ import { projectStore } from 'store';
 
 import { VerticalMarginRow } from 'components';
 import { Banner, Projects } from './components';
+import { StyledHomePageRow } from './components/components.styled';
 
 const ObservingProjects = observer(Projects);
 
@@ -31,7 +32,7 @@ const HomePage = () => {
         actions="Таомртвло"
       />
 
-      <VerticalMarginRow gutter={5}>
+      <StyledHomePageRow gutter={5}>
         <Col xs={24} sm={12}>
           <Card
             hoverable
@@ -56,7 +57,7 @@ const HomePage = () => {
             </VerticalMarginRow>
           </Card>
         </Col>
-      </VerticalMarginRow>
+      </StyledHomePageRow>
 
       <ObservingProjects
         projects={projectStore.projectsList}

@@ -1,13 +1,12 @@
 import {
   PageHeader,
-  Row,
   Col,
   Button,
   Descriptions,
   Card,
   Image,
   Space,
-  Empty
+  Empty,
 } from 'antd';
 import { LikeFilled } from '@ant-design/icons';
 import _ from 'lodash';
@@ -135,6 +134,8 @@ const ProjectDetailPage = () => {
           </Card>
         </Col>
       </VerticalMarginRow>
+
+
     </>
   );
 };
