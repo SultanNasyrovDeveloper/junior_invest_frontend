@@ -9,7 +9,7 @@ import { SubmitButton } from '../components';
 
 const SigninForm = (props) => {
 
-  const { formRef, onSignupClick, onSubmit } = props;
+  const { loading, formRef, onSignupClick, onSubmit } = props;
 
   const onFinish = useCallback((data) => {
     onSubmit(data);
@@ -59,6 +59,7 @@ const SigninForm = (props) => {
 
       <Form.Item>
         <SubmitButton
+          loading={loading}
           size="large"
           type="primary"
           htmlType="submit"

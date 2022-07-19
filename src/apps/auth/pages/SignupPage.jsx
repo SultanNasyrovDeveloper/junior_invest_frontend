@@ -1,6 +1,6 @@
 import { Card, Col, Row } from 'antd';
 import _ from 'lodash';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { signup } from '../api'
@@ -11,7 +11,10 @@ const SingupPage = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const handleFormSubmit = useCallback(async (validatedData) => {
+    setLoading(true);
     try {
       await signup(validatedData);
       navigate('/registration/success');
@@ -25,7 +28,9 @@ const SingupPage = () => {
         });
         formRef.current.setFields(formErrors);
       }
-      console.log(error);
+    }
+    finally {
+      setLoading(false);
     }
   },[]);
 
@@ -34,6 +39,7 @@ const SingupPage = () => {
       <Col xs={24} sm={20} md={12} lg={8}>
         <Card title="Форма регистрации">
           <SignupForm
+            loading={loading}
             formRef={formRef}
             onSubmit={handleFormSubmit}
           />

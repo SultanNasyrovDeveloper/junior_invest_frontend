@@ -1,16 +1,17 @@
 import { Form, Input } from 'antd';
-import _ from 'lodash';
-import React from 'react';
-import { SubmitButton } from '../components';
 import {
   MailOutlined,
   LockOutlined,
   UserOutlined
 } from "@ant-design/icons";
+import _ from 'lodash';
+import React from 'react';
+import { SubmitButton } from '../components';
+
 
 const SignupForm = (props) => {
 
-  const { onSubmit, formRef } = props;
+  const { onSubmit, formRef, loading } = props;
 
   return (
     <Form
@@ -82,6 +83,7 @@ const SignupForm = (props) => {
       </Form.Item>
       <Form.Item>
         <SubmitButton
+          loading={loading}
           size="large"
           type="primary"
           htmlType="submit"

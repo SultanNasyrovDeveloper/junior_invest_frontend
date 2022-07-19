@@ -1,6 +1,6 @@
 import { Row, Col, Card, notification } from 'antd';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useMemo, useEffect, useRef } from 'react';
+import React, { useCallback, useMemo, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTitle } from 'react-use';
 
@@ -16,6 +16,7 @@ const SigninPage = () => {
   const navigate = useNavigate();
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const formRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   const targetLocation = useMemo(() => {
     return location.state?.from?.pathname || '/profile';
@@ -26,7 +27,7 @@ const SigninPage = () => {
   }, [navigate])
 
   const handleFormSubmit = useCallback(async (credentials) => {
-    debugger;
+    setLoading(true);
     try {
       const tokens = await userStore.signin(credentials);
       AuthService.login(tokens);
@@ -42,6 +43,9 @@ const SigninPage = () => {
       setIsLoggedIn(false);
       formRef.current.resetFields()
     }
+    finally {
+      setLoading(false);
+    }
   }, [setIsLoggedIn, targetLocation]);
 
   useEffect(() => {
@@ -55,6 +59,7 @@ const SigninPage = () => {
       <Col  xs={24} sm={20} md={12} lg={8}>
         <Card title="Авторизация">
           <SigninForm
+            loading={loading}
             formRef={formRef}
             onSignupClick={handelSignupClick}
             onSubmit={handleFormSubmit}
