@@ -38,7 +38,10 @@ const HomePage = () => {
             cover={<img src={createProjectImage} alt=""/>}
             onClick={() => navigate('/projects/new/general')}
           >
-            <Typography>Раскрути свой проект</Typography>
+            <VerticalMarginRow justify="center">
+              <Typography.Title level={4} type="primary">Раскрути свой проект</Typography.Title>
+            </VerticalMarginRow>
+
           </Card>
         </Col>
         <Col xs={24} sm={12}>
@@ -48,7 +51,9 @@ const HomePage = () => {
             onClick={() => navigate('/projects')}
             cover={<img src={viewProjectsImage} alt=""/>}
           >
-            <Typography>Смотри проекты участников</Typography>
+            <VerticalMarginRow justify="center">
+              <Typography.Title level={4} type="primary">Смотри проекты участников</Typography.Title>
+            </VerticalMarginRow>
           </Card>
         </Col>
       </VerticalMarginRow>
