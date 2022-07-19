@@ -6,7 +6,7 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 
 import { newProjectStore } from 'store';
 import { createProjectImage, deleteProjectImage, updateProject } from '../api';
-import {useTitle} from "react-use";
+import { useTitle } from "react-use";
 
 const getBase64 = (file)  =>
   new Promise((resolve, reject) => {

@@ -2,9 +2,11 @@ import _ from "lodash";
 import { Button, Row, Space, Col, Typography } from 'antd';
 import React from 'react';
 
-import {mediaValidationSchema} from "./validation";
+import { mediaValidationSchema } from "./validation";
 import { Input, Form } from "formik-antd";
 import { Formik, FieldArray } from "formik";
+
+import { VerticalMarginRow } from 'components';
 
 const MediaForm = (props) => {
 
@@ -35,13 +37,17 @@ const MediaForm = (props) => {
                         <Col xs={24} md={4}>
                           <Button onClick={() => remove(index)}>Удалить</Button>
                         </Col>
-
                       </Row>
 
                     </>
                   ))
                 }
-                <Button onClick={() => push({ url: '' })}>Добавить</Button>
+                <VerticalMarginRow>
+                  <Button
+                    onClick={() => push({ url: '' })}
+                  >Добавить</Button>
+                </VerticalMarginRow>
+
               </>
             ) }
           </FieldArray>

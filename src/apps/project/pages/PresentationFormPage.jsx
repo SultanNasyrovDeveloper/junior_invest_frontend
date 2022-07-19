@@ -119,7 +119,7 @@ const PresentationFormPage = () => {
             </Link>
             <Link to="/projects/new/media">
               <Button
-                disabled={_.isEmpty(files)}
+                disabled={_.isEmpty(files) || hasChanged}
               >Пропустить</Button>
             </Link>
             <Button
