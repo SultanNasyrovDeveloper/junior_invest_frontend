@@ -30,7 +30,7 @@ const Banner = () => {
     <BannerContainer >
       <Logo className="banner-logo"/>
       <Typography.Title level={2}>
-        Платформа поддержки проектов детей от 7 до 16 лет
+        Платформа поддержки проектов детей от 7 до 17 лет
       </Typography.Title>
     </BannerContainer>
   );
