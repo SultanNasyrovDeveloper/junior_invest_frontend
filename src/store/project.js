@@ -49,9 +49,9 @@ class ProjectStore {
     const response = await client.get(projectsUrl, { params: queryParams });
     const projects = _.get(response, 'data.results');
     runInAction(() => {
-      this.projectsList = projects
+      this.projectsList = projects;
     });
-    return projects;
+    return [projects, _.get(response, 'data.count')];
   }
 
   async fetchProjectCategories() {

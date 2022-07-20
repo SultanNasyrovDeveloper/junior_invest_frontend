@@ -13,7 +13,6 @@ import { useTitle, useAsync } from 'react-use';
 
 import { VerticalMarginRow } from 'components';
 import { projectStore } from 'store';
-import { fetchProjects } from '../api';
 import {
   ProjectsList,
   CategoryFilterSelectMenu,
@@ -85,8 +84,7 @@ const ProjectListPage = () => {
 
   useAsync(async () => {
     try {
-      const [projects, count] = await fetchProjects(queryParams);
-      projectStore.setProjects(projects);
+      const [,count] = await projectStore.fetchProjects(queryParams);;
       setProjectsCount(count);
     }
     catch(error) {
