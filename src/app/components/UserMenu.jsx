@@ -1,7 +1,6 @@
 import {
   Avatar,
   Dropdown,
-  Button,
   Card,
   List,
   Space
@@ -9,9 +8,9 @@ import {
 import {
   UserOutlined,
   ProfileOutlined,
-  MessageOutlined,
-  PayCircleOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  UserAddOutlined,
+  LoginOutlined
 } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -36,6 +35,25 @@ const StyledUserMenuCard = styled(Card)`
 const ListItemStyled = styled(List.Item)`
   cursor: pointer;
 `;
+
+const StyledLinksContainer = styled.div`
+  
+  .textLinksContainer{
+    display: flex;
+    
+    @media (max-width: 365px) {
+      display: none;
+    }
+  }
+  
+  .iconLinksContainer {
+    display: none;
+
+    @media (max-width: 365px) {
+      display: flex;
+    }
+  }
+`
 
 const UserMenu = () => {
 
@@ -81,14 +99,20 @@ const UserMenu = () => {
         </Dropdown>
       }
       { !isLoggedIn &&
-        <>
-          <Link to="/signup">
-            <Button type="link">Регистрация</Button>
-          </Link>
-          <Link to="/signin">
-            <Button type="link">Войти</Button>
-          </Link>
-        </>
+        <StyledLinksContainer>
+          <Space size="large" className="textLinksContainer">
+            <Link to="/signup">Регистрация</Link>
+            <Link to="/signin">Вход</Link>
+          </Space>
+          <Space className="iconLinksContainer">
+            <Link to="/signup">
+              <UserAddOutlined />
+            </Link>
+            <Link to="/signin">
+              <LoginOutlined />
+            </Link>
+          </Space>
+        </StyledLinksContainer>
       }
     </>
   );
