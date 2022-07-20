@@ -82,13 +82,14 @@ const ProjectDetailPage = () => {
         </Col>
 
         <Col xs={24} md={4}>
-          <Card style={{ overflowY: 'auto', height: '100%' }}>
+          <Card style={{ overflowY: 'auto', height: '600px' }}>
             {
               !_.isEmpty(project?.images) &&
               <Image.PreviewGroup>
                 {
                   project.images.map(image => (
                     <Image
+                      key={image.id}
                       width="100%"
                       src={image.file.url}
                     />

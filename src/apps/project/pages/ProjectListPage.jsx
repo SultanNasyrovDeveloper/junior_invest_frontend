@@ -32,7 +32,6 @@ const ProjectListPage = () => {
   const [pageSize, setPageSize] = useState(10);
   const [projectsCount, setProjectsCount] = useState(0);
   const [ordering, setOrdering] = useState('created');
-  // const [chosenCategories, setChosenCategories] = useState(new Set());
 
   const projects = useMemo(() => {
     return projectStore.projectsList;
@@ -49,7 +48,6 @@ const ProjectListPage = () => {
   const chosenCategories = useMemo(() => {
     return searchParams.getAll('category').map((category) => parseInt(category));
   }, [searchParams]);
-  console.log(chosenCategories)
 
   const queryParams = useMemo(() => {
     const queryParams = new URLSearchParams();
@@ -62,8 +60,6 @@ const ProjectListPage = () => {
     })
     return queryParams;
   }, [page, pageSize, ordering, searchParams]);
-
-  console.log(queryParams.toString());
 
   const addChosenCategory = useCallback((categoryId) => {
     const newSearchParams = searchParams;
