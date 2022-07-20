@@ -64,7 +64,7 @@ const ProjectCard = (props) => {
       }
     >
       <Row>
-        { project.name }
+        { _.truncate(project.name, { length: 75 }) }
       </Row>
       {
         showStatus &&
