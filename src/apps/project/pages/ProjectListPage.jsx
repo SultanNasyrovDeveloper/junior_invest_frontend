@@ -83,7 +83,6 @@ const ProjectListPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Updating query based on chosen categories');
     const newSearchParams = searchParams;
     chosenCategories.forEach((categoryId) => {
       if (!newSearchParams.getAll('category').includes(`${categoryId}`)) {
@@ -95,7 +94,6 @@ const ProjectListPage = () => {
 
   useAsync(async () => {
     try {
-      console.log(queryParams.toString());
       const [,count] = await projectStore.fetchProjects(queryParams);
       setProjectsCount(count);
     }

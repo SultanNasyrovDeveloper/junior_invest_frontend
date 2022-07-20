@@ -41,11 +41,9 @@ import {
   SidebarMenu,
   Footer
 } from './components';
-import { useScrollTop } from './hooks'
 import { NotFoundPage } from './pages';
 
 function App() {
-  useScrollTop();
   return (
     <Layout
       header={

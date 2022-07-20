@@ -1,5 +1,6 @@
 import { Card, Row, Col } from 'antd';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import {
   ApplicationLayoutStyled,
@@ -23,6 +24,14 @@ const AppLayout = (props) => {
     onNavigationClose
   } = props;
 
+  const { pathname } = useLocation();
+  const scrollbarRef = useRef(null)
+
+  useEffect(() => {
+    scrollbarRef.current?.scrollTop()
+  }, [pathname]);
+
+
   return (
     <ApplicationLayoutStyled>
 
@@ -33,7 +42,7 @@ const AppLayout = (props) => {
       </HeaderStyled>
 
       <ContentOuterContainerStyled>
-        <ScrollableContentStyled>
+        <ScrollableContentStyled ref={scrollbarRef}>
           <ContentInnerContainerStyled>
             <MainContainerStyled>
               { content }
