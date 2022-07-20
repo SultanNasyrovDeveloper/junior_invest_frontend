@@ -11,7 +11,7 @@ const CategoryFilterSelectMenu = (props) => {
       placement="bottomRight"
       overlay={
         <Card>
-          <Scrollbars style={{ height: 350, width: 180 }}>
+          <Scrollbars style={{ height: 200, width: 180 }}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
               {
                 categories?.map(category => {

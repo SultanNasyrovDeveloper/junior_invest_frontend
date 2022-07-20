@@ -34,6 +34,10 @@ export const ScrollableContentStyled = styled(Scrollbars)`
 export const MainContainerStyled = styled(Layout.Content)`
   padding: 0.5rem 0;
   max-width: 1320px;
+  
+  @media (max-width: 1320px) {
+    padding: 0.5rem;
+  }
 `;
 
 export const DrawerStyled = styled(Drawer)`

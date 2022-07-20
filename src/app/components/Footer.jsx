@@ -17,7 +17,10 @@ const Footer = () => {
     <>
       <Row gutter={5}>
         <Col xs={24} sm={12} md={8}>
-          <List size="small" split={false}>
+          <List
+            size="small"
+            split={false}
+          >
             <List.Item>
               <List.Item.Meta
                 avatar={<HomeOutlined />}
@@ -50,8 +53,12 @@ const Footer = () => {
             </List.Item>
           </List>
         </Col>
-        <Col xs={24} sm={12} md={8}></Col>
-        <Col xs={24} sm={12} md={8}></Col>
+        <Col xs={24} sm={12} md={8}>
+
+        </Col>
+        <Col xs={24} sm={12} md={8}>
+
+        </Col>
       </Row>
       <Divider />
       <VerticalMarginRow justify="center">
