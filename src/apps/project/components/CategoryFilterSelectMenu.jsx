@@ -19,7 +19,7 @@ const CategoryFilterSelectMenu = (props) => {
                     <Checkbox
                       style={{ margin: 0}}
                       key={category.id}
-                      checked={checked.has(category.id)}
+                      checked={checked.includes(category.id)}
                       onChange={(event) => onChange(event, category.id)}
                     >{ category.name }</Checkbox>
                   )

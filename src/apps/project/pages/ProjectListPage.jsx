@@ -25,14 +25,18 @@ const ObservingCategorySelectFilter = observer(CategoryFilterSelectMenu);
 const ProjectListPage = () => {
 
   useTitle('Список проектов');
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [projectsCount, setProjectsCount] = useState(0);
   const [ordering, setOrdering] = useState('created');
-  const [chosenCategories, setChosenCategories] = useState(new Set());
+  // const [chosenCategories, setChosenCategories] = useState(new Set());
+
+  const projects = useMemo(() => {
+    return projectStore.projectsList;
+  }, [projectStore.projectsList])
 
   const orderingSelectOptions = useMemo(() => {
     const options = []
@@ -42,33 +46,39 @@ const ProjectListPage = () => {
     return options;
   }, []);
 
+  const chosenCategories = useMemo(() => {
+    return searchParams.getAll('category').map((category) => parseInt(category));
+  }, [searchParams]);
+  console.log(chosenCategories)
+
   const queryParams = useMemo(() => {
     const queryParams = new URLSearchParams();
     queryParams.append('order', ordering);
     queryParams.append('status', 'moderated');
     queryParams.append('limit', pageSize);
     queryParams.append('offset', pageSize * (page - 1))
-    chosenCategories.forEach(categoryId => {
-      queryParams.append('category', categoryId);
-    });
-    return queryParams;
-  }, [page, pageSize, ordering, chosenCategories]);
-
-  const addChosenCategory = (categoryId) => {
-    setChosenCategories(prev => {
-      const newChosenCategories = new Set(prev);
-      newChosenCategories.add(categoryId);
-      return newChosenCategories;
+    searchParams.forEach((value, key) => {
+      queryParams.append(key, value);
     })
-  };
+    return queryParams;
+  }, [page, pageSize, ordering, searchParams]);
 
-  const removeChosenCategory = (categoryId) => {
-    setChosenCategories(prev => {
-      const newChosenCategories = new Set(prev);
-      newChosenCategories.delete(categoryId);
-      return newChosenCategories;
-    });
-  };
+  console.log(queryParams.toString());
+
+  const addChosenCategory = useCallback((categoryId) => {
+    const newSearchParams = searchParams;
+    newSearchParams.append('category', categoryId);
+    setSearchParams(newSearchParams);
+  }, [searchParams, setSearchParams]);
+
+  const removeChosenCategory = useCallback((categoryId) => {
+    const newSearchParams = searchParams;
+    const entries = newSearchParams.getAll('category');
+    const newEntries = entries.filter(entry => entry !== `${categoryId}`);
+    newSearchParams.delete('category');
+    newEntries.forEach(newEntry => newSearchParams.append('category', newEntry));
+    setSearchParams(newSearchParams);
+  }, [searchParams, setSearchParams]);
 
   const handleCategoryFilterChange = useCallback((event, categoryId) => {
     event.target.checked
@@ -77,14 +87,20 @@ const ProjectListPage = () => {
   }, []);
 
   useEffect(() => {
-    if (searchParams.has('category')) {
-      addChosenCategory(parseInt(searchParams.get('category')));
-    }
-  }, [searchParams]);
+    console.log('Updating query based on chosen categories');
+    const newSearchParams = searchParams;
+    chosenCategories.forEach((categoryId) => {
+      if (!newSearchParams.getAll('category').includes(`${categoryId}`)) {
+        newSearchParams.append('category', categoryId);
+      }
+    });
+    setSearchParams(newSearchParams);
+  }, [chosenCategories]);
 
   useAsync(async () => {
     try {
-      const [,count] = await projectStore.fetchProjects(queryParams);;
+      console.log(queryParams.toString());
+      const [,count] = await projectStore.fetchProjects(queryParams);
       setProjectsCount(count);
     }
     catch(error) {
@@ -105,34 +121,30 @@ const ProjectListPage = () => {
       >
         Здесь вы можете увидеть список проектов, созданных талантливыми учениками со всего Татарстана.
       </PageHeader>
-
       <div>
-        {
-          !_.isEmpty(projectStore.projectsList) &&
-          <VerticalMarginRow justify="space-between">
-            <Select
-              value={pageSize}
-              options={pageSizeOptions}
-              onChange={setPageSize}
+        <VerticalMarginRow justify="space-between">
+          <Select
+            value={pageSize}
+            options={pageSizeOptions}
+            onChange={setPageSize}
+          />
+          <Space>
+            <ObservingCategorySelectFilter
+              categories={projectStore.projectCategories}
+              checked={chosenCategories}
+              onChange={handleCategoryFilterChange}
             />
-            <Space>
-              <ObservingCategorySelectFilter
-                categories={projectStore.projectCategories}
-                checked={chosenCategories}
-                onChange={handleCategoryFilterChange}
-              />
-              <Select
-                style={{minWidth: 250}}
-                value={ordering}
-                options={orderingSelectOptions}
-                onChange={setOrdering}
-              />
-            </Space>
-          </VerticalMarginRow>
-        }
+            <Select
+              style={{minWidth: 250}}
+              value={ordering}
+              options={orderingSelectOptions}
+              onChange={setOrdering}
+            />
+          </Space>
+        </VerticalMarginRow>
 
         <ObservingProjectsList
-          projects={projectStore.projectsList}
+          projects={projects}
           onClick={(project) => navigate(`/projects/${project.id}`)}
         />
 
